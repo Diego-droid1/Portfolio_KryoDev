@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Create Your Own Systems Store - ClearlyDev</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+    }
+    body, html {
+      height: 100%;
+      font-family: 'Orbitron', sans-serif;
+      background: #000;
+      color: #00ffff;
+      overflow-x: hidden;
+    }
+
+    /* Container */
+    .container {
+      max-width: 480px;
+      margin: 6rem auto;
+      background: rgba(0, 255, 255, 0.05);
+      border: 1px solid #00ffff;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow:
+        0 0 8px #00ffff,
+        0 0 20px #00ffff;
+      position: relative;
+      z-index: 10;
+    }
+
+    h2.gradient-text {
+      font-size: 2.2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      background: linear-gradient(45deg, #00ffff, #00aaff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 6px #00ffff;
+    }
+
+    form.store-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-bottom: 0.4rem;
+      font-weight: 700;
+      text-shadow: 0 0 5px #00ffff;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      background: #001f2f;
+      border: 2px solid #00ffff;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      color: #00ffff;
+      transition: border-color 0.3s ease;
+      outline: none;
+      box-shadow: 0 0 6px #00ffff inset;
+      resize: vertical;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #00ffff;
+      box-shadow:
+        0 0 8px #00ffff inset,
+        0 0 12px #00ffff;
+    }
+
+    /* Checkbox group styling */
+    .checkbox-group {
+      flex-direction: row;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #00ffff;
+      filter: drop-shadow(0 0 2px #00ffff);
+    }
+
+    /* Button styling */
+    button.btn-primary {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #000;
+      background: #00ffff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow:
+        0 0 12px #00ffff,
+        0 0 20px #00ffff;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      align-self: center;
+      min-width: 160px;
+      user-select: none;
+    }
+    button.btn-primary:hover,
+    button.btn-primary:focus {
+      background: #00aaff;
+      box-shadow:
+        0 0 20px #00aaff,
+        0 0 30px #00aaff;
+      outline: none;
+    }
+
+    /* PARTICLES CANVAS */
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+      background: #000;
+    }
+
+    /* Scrollbar styling for aesthetics */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #000;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #00ffff;
+      border-radius: 10px;
+      box-shadow: 0 0 8px #00ffff;
+    }
+
+    @media (max-width: 520px) {
+  .container {
+    max-width: 90vw;
+    margin: 3rem auto;
+    padding: 1.5rem;
+  }
+
+  h2.gradient-text {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  form.store-form {
+    gap: 1rem;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  select,
+  textarea {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.8rem;
+  }
+
+  button.btn-primary {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+    min-width: 140px;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    margin: 2rem 1rem;
+    padding: 1rem;
+  }
+
+  h2.gradient-text {
+    font-size: 1.3rem;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  select,
+  textarea {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.6rem;
+  }
+
+  button.btn-primary {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    min-width: 100px;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <canvas id="particles-canvas"></canvas>
+
+  <main>
+    <section class="store-form-section container" aria-labelledby="store-form-title">
+      <h2 id="store-form-title" class="gradient-text">Create Your Own Store</h2>
+      
+      <form class="store-form" novalidate>
+        <div class="form-group">
+          <label for="storeName">Store Name</label>
+          <input type="text" id="storeName" name="storeName" placeholder="Example: TechMasters" required minlength="3" />
+        </div>
+
+        <div class="form-group">
+          <label for="ownerName">Owner's Name</label>
+          <input type="text" id="ownerName" name="ownerName" placeholder="Your full name" required minlength="3" />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="email@example.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="storeDescription">Brief Description</label>
+          <textarea id="storeDescription" name="storeDescription" placeholder="Describe your store briefly..." rows="4" maxlength="250" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="storeType">Store Type</label>
+          <select id="storeType" name="storeType" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="hardware">Hardware</option>
+            <option value="software">Software</option>
+            <option value="gaming">Gaming</option>
+            <option value="services">Services</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <input type="checkbox" id="terms" name="terms" required />
+          <label for="terms">I agree to the terms and conditions</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create Store</button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    // PARTICLES CANVAS SCRIPT
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    function initCanvas() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 0.7;
+        this.speedY = (Math.random() - 0.5) * 0.7;
+        this.color = `rgba(0, 255, 255, ${Math.random() * 0.5 + 0.3})`;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > width) this.speedX = -this.speedX;
+        if (this.y < 0 || this.y > height) this.speedY = -this.speedY;
+      }
+      draw() {
+        ctx.shadowColor = '#00ffff';
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    const maxParticles = 100;
+    const particlesArray = [];
+
+    function initParticles() {
+      particlesArray.length = 0;
+      for (let i = 0; i < maxParticles; i++) {
+        particlesArray.push(new Particle());
+      }
+    }
+
+    function connectParticles() {
+      for (let a = 0; a < particlesArray.length; a++) {
+        for (let b = a + 1; b < particlesArray.length; b++) {
+          const dx = particlesArray[a].x - particlesArray[b].x;
+          const dy = particlesArray[a].y - particlesArray[b].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) {
+            ctx.strokeStyle = `rgba(0,255,255,${1 - dist / 150})`;
+            ctx.lineWidth = 1;
+            ctx.shadowColor = '#00ffff';
+            ctx.shadowBlur = 4;
+            ctx.beginPath();
+            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      particlesArray.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      connectParticles();
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => {
+      initCanvas();
+      initParticles();
+    });
+
+    // Initialize
+    initCanvas();
+    initParticles();
+    animate();
+
+    // FORM SUBMISSION HANDLER (basic validation feedback)
+    const form = document.querySelector('.store-form');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        alert('Please fill out the form correctly and agree to the terms.');
+        return;
+      }
+
+      alert('Store Created Successfully! (Demo)');
+      form.reset();
+    });
+  </script>
+</body>
+</html>

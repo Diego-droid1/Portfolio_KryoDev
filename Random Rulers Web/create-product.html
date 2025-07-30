@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Create Product • ClearlyDev</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* === Reset & Base === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      background: #000;
+      overflow-x: hidden;
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffff;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #00ffff;
+      border-radius: 5px;
+      box-shadow: 0 0 8px #00ffff;
+    }
+
+    /* === Particles Background === */
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+      background: #000;
+    }
+
+    /* === Container === */
+    .container {
+      max-width: 480px;
+      margin: 7rem auto;
+      background: rgba(0, 255, 255, 0.05);
+      border: 2px solid #00ffff;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 0 12px #00ffff, 0 0 24px #00ffff;
+      position: relative;
+      z-index: 10;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      background: linear-gradient(45deg, #00ffff, #00aaff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 6px #00ffff;
+    }
+
+    /* === Form Styling === */
+    .product-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    label {
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      text-shadow: 0 0 5px #00ffff;
+    }
+
+    input, select, textarea {
+      background: #001f2f;
+      border: 2px solid #00ffff;
+      border-radius: 6px;
+      padding: 0.75rem;
+      color: #00ffff;
+      box-shadow: inset 0 0 6px #00ffff;
+      font-family: 'Orbitron', sans-serif;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #00ffff;
+      box-shadow: inset 0 0 8px #00ffff, 0 0 12px #00ffff;
+    }
+
+    .btn-primary {
+      margin-top: 1rem;
+      align-self: center;
+      padding: 0.75rem 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      background: #00ffff;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 12px #00ffff, 0 0 20px #00ffff;
+      transition: 0.3s;
+    }
+
+    .btn-primary:hover, .btn-primary:focus {
+      background: #00aaff;
+      box-shadow: 0 0 20px #00aaff, 0 0 30px #00aaff;
+    }
+
+    #preview-message p {
+      text-align: center;
+      margin-top: 1rem;
+      color: #00ffff;
+      text-shadow: 0 0 6px #00ffff;
+    }
+
+    /* === Header === */
+    .header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 1rem 0;
+    }
+
+    .header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      color: #00ffff;
+      text-shadow: 0 0 8px #00ffff;
+    }
+
+    .logo-badge {
+      background: #00ffff;
+      color: #000;
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      margin-left: 0.5rem;
+    }
+
+    .nav-link {
+      color: #00ffff;
+      text-decoration: none;
+      margin-left: 1rem;
+      font-size: 1rem;
+      text-shadow: 0 0 5px #00ffff;
+    }
+
+    .nav-link:hover {
+      text-shadow: 0 0 12px #00ffff;
+    }
+    /* Responsive adjustments */
+
+@media (max-width: 520px) {
+  .container {
+    max-width: 90vw;
+    margin: 4rem auto;
+    padding: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .product-form {
+    gap: 1rem;
+  }
+
+  input, select, textarea {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  .btn-primary {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+    min-width: 140px;
+  }
+
+  .header .container {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    margin: 3rem 1rem;
+    padding: 1rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  input, select, textarea {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+  }
+
+  .btn-primary {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    min-width: 100px;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <!-- Particles Canvas -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Main Form Section -->
+  <main>
+    <section class="create-product container" aria-label="Create a new system product">
+      <h2>Create New Product</h2>
+
+      <form id="product-form" class="product-form" enctype="multipart/form-data" novalidate>
+        <div class="form-group">
+          <label for="product-name">System Name</label>
+          <input type="text" id="product-name" name="productName" placeholder="e.g. Advanced Combat Script" required minlength="3" />
+        </div>
+
+        <div class="form-group">
+          <label for="product-description">Description</label>
+          <textarea id="product-description" name="productDescription" rows="5" required placeholder="Describe features, compatibility, etc."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="product-price">Price (USD)</label>
+          <input type="number" id="product-price" name="productPrice" min="0" step="0.01" required placeholder="e.g. 50" />
+        </div>
+
+        <div class="form-group">
+          <label for="product-category">Category</label>
+          <select id="product-category" name="productCategory" required>
+            <option value="">Select category</option>
+            <option value="scripting">Scripting</option>
+            <option value="uiux">UI/UX</option>
+            <option value="admin">Admin Panels</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="product-image">Cover Image</label>
+          <input type="file" id="product-image" name="productImage" accept="image/*" required />
+        </div>
+
+        <button type="submit" class="btn-primary">Publish Product</button>
+      </form>
+
+      <div id="preview-message" style="display:none;">
+        <p>Your product was created (demo only).</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Particles + Form Script -->
+  <script>
+    // === Particles Background Animation ===
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let w, h, particles = [];
+    const count = 100;
+
+    function initParticles() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      particles = [];
+
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.7,
+          vy: (Math.random() - 0.5) * 0.7,
+          size: Math.random() * 3 + 1,
+          alpha: Math.random() * 0.5 + 0.3
+        });
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, w, h);
+
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > w) p.vx *= -1;
+        if (p.y < 0 || p.y > h) p.vy *= -1;
+
+        ctx.fillStyle = `rgba(0,255,255,${p.alpha})`;
+        ctx.shadowColor = '#00ffff';
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, 2 * Math.PI);
+        ctx.fill();
+      });
+
+      for (let i = 0; i < count; i++) {
+        for (let j = i + 1; j < count; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.hypot(dx, dy);
+
+          if (dist < 150) {
+            ctx.strokeStyle = `rgba(0,255,255,${1 - dist / 150})`;
+            ctx.lineWidth = 1;
+            ctx.shadowColor = '#00ffff';
+            ctx.shadowBlur = 4;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', initParticles);
+    initParticles();
+    animate();
+
+    // === Form Submission Handling ===
+    document.getElementById('product-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      if (!this.checkValidity()) {
+        this.reportValidity();
+        return;
+      }
+
+      const name = this.productName.value.trim();
+      const desc = this.productDescription.value.trim();
+      const price = parseFloat(this.productPrice.value);
+      const cat = this.productCategory.value;
+      const file = this.productImage.files[0];
+
+      if (!file) {
+        alert('Please upload an image.');
+        return;
+      }
+
+      const reader = new FileReader();
+
+      reader.onload = function (evt) {
+        const img = evt.target.result;
+        const arr = JSON.parse(localStorage.getItem('products')) || [];
+        arr.push({ name, description: desc, price, category: cat, image: img });
+
+        localStorage.setItem('products', JSON.stringify(arr));
+        document.getElementById('preview-message').style.display = 'block';
+        document.getElementById('product-form').reset();
+
+        setTimeout(() => window.location.href = 'store.html', 1500);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  </script>
+
+</body>
+</html>

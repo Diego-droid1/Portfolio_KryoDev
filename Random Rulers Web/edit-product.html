@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Edit Product - My Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset básico */
+    * {
+      box-sizing: border-box;
+    }
+
+    body, html {
+      margin: 0; padding: 0;
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: #0f0f1a;
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* PARTICULAS (canvas detrás) */
+    #particles-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      background: #0f0f1a;
+    }
+
+    /* Container para contenido */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Header */
+    .header {
+      background-color: rgba(15,15,26,0.85);
+      border-bottom: 1px solid #222255;
+      padding: 0.75rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      box-shadow:
+        0 0 10px #0070f3,
+        0 0 30px #00e0ff,
+        0 0 60px #00ffff;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #00ffff;
+      user-select: none;
+      text-shadow:
+        0 0 5px #00ffff,
+        0 0 10px #00ffff,
+        0 0 20px #00ffff,
+        0 0 30px #00ffff;
+    }
+
+    .logo-badge {
+      background: #00ffff;
+      color: #0f0f1a;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      margin-left: 0.5rem;
+      box-shadow:
+        0 0 6px #00ffff,
+        0 0 12px #00ffff;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #66ffff;
+      padding: 0.5rem 0.75rem;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      font-weight: 600;
+      text-shadow:
+        0 0 3px #00ffff;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus {
+      background-color: #00ffff;
+      color: #0f0f1a;
+      outline: none;
+      box-shadow:
+        0 0 10px #00ffff,
+        0 0 20px #00ffff;
+    }
+
+    .btn {
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      padding: 0.5rem 1rem;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      user-select: none;
+      text-shadow: 0 0 6px #00ffff;
+    }
+
+    .btn-primary {
+      background-color: #00ffff;
+      color: #0f0f1a;
+      box-shadow:
+        0 0 10px #00ffff,
+        0 0 20px #00ffff;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background-color: #00a9a9;
+      outline: none;
+      box-shadow:
+        0 0 15px #00ffff,
+        0 0 30px #00ffff;
+      color: #e0ffff;
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 2px solid #00ffff;
+      color: #00ffff;
+      box-shadow:
+        0 0 8px #00ffff;
+    }
+
+    .btn-outline:hover,
+    .btn-outline:focus {
+      background-color: #00ffff;
+      color: #0f0f1a;
+      outline: none;
+      box-shadow:
+        0 0 15px #00ffff,
+        0 0 30px #00ffff;
+    }
+
+    .btn-tertiary {
+      background: none;
+      color: #00ffff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.25rem 0.5rem;
+      text-shadow:
+        0 0 8px #00ffff;
+    }
+
+    .btn-tertiary:hover,
+    .btn-tertiary:focus {
+      text-decoration: underline;
+      outline: none;
+      text-shadow:
+        0 0 12px #00ffff;
+    }
+
+    /* Formulario */
+    .edit-product h2 {
+      margin-bottom: 1rem;
+      font-weight: 700;
+      color: #00ffff;
+      text-shadow:
+        0 0 6px #00ffff,
+        0 0 12px #00ffff;
+    }
+
+    .product-form {
+      background: rgba(0, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow:
+        0 0 10px #00ffff88,
+        0 0 30px #00ffff33 inset;
+      border: 1px solid #00ffff88;
+      color: #cceeff;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #00ffff;
+      text-shadow: 0 0 4px #00ffffaa;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group select,
+    .form-group textarea,
+    .form-group input[type="file"] {
+      padding: 0.5rem 0.75rem;
+      font-size: 1rem;
+      border: 1.5px solid #00ffffaa;
+      border-radius: 6px;
+      transition: border-color 0.3s ease;
+      font-family: inherit;
+      background: rgba(0,255,255,0.05);
+      color: #ccf9ff;
+      text-shadow:
+        0 0 3px #00ffffaa;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group input[type="number"]:focus,
+    .form-group select:focus,
+    .form-group textarea:focus,
+    .form-group input[type="file"]:focus {
+      border-color: #00ffff;
+      outline: none;
+      box-shadow:
+        0 0 8px #00ffff;
+      background: rgba(0,255,255,0.1);
+    }
+
+    .form-group small {
+      color: #00cccc;
+      font-size: 0.85rem;
+      margin-top: 0.3rem;
+      text-shadow: none;
+    }
+
+    /* Botones en formulario */
+    .product-form > button,
+    .product-form > a {
+      margin-right: 1rem;
+      margin-top: 1rem;
+      user-select: none;
+    }
+
+    .product-form > a {
+      display: inline-block;
+      text-decoration: none;
+      line-height: 2.5rem;
+      padding: 0 1rem;
+      box-shadow:
+        0 0 6px #00ffff;
+    }
+
+    /* Mensaje éxito */
+    #edit-success p {
+      color: #2e7d32;
+      font-weight: 600;
+      background-color: #d0f0d6;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      border: 1px solid #2e7d32;
+      max-width: 400px;
+      color: #0f0;
+      background-color: rgba(0,255,0,0.1);
+      box-shadow:
+        0 0 8px #0f0;
+    }
+
+    /* Scrollbar personalizada estilo neón */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f0f1a; /* fondo oscuro para track */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00ffffaa;
+  border-radius: 10px;
+  box-shadow:
+    0 0 8px #00ffff,
+    0 0 16px #00ffff;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00ffff;
+  box-shadow:
+    0 0 12px #00ffff,
+    0 0 24px #00ffff;
+}
+
+/* Firefox compatible scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #00ffff #0f0f1a;
+}
+
+/* Responsive general */
+@media (max-width: 720px) {
+  .header-container {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .logo-lang {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+  }
+
+  .nav-link {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem 0;
+  }
+
+  .product-form {
+    padding: 1rem;
+    width: 100%;
+  }
+}
+
+/* Pantallas muy pequeñas */
+@media (max-width: 480px) {
+  body, html {
+    font-size: 14px;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+  }
+
+  .btn, .btn-primary, .btn-outline, .btn-tertiary {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .product-form {
+    padding: 0.75rem;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="number"],
+  .form-group select,
+  .form-group textarea,
+  .form-group input[type="file"] {
+    font-size: 0.95rem;
+  }
+
+  .nav-list {
+    gap: 0.5rem;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <!-- Canvas para partículas -->
+  <canvas id="particles-canvas"></canvas>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="logo-lang" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <div class="logo" style="margin: 0 auto;" aria-label="ClearlyDev PRO logo">RandomDevs<span class="logo-badge">PRO</span></div>
+        <button id="lang-toggle" class="btn btn-tertiary" type="button">ES</button>
+      </div>
+
+      <nav class="nav" aria-label="Main Navigation">
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="store.html" class="nav-link">My Store</a></li>
+          <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+          <li><a href="contact.html" class="nav-link">Contact</a></li>
+          <li><a href="logout.html" class="nav-link btn btn-outline">Logout</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Edit Product Form -->
+  <main class="edit-product" role="main" aria-label="Edit your product">
+    <div class="container">
+      <h2>Edit Product</h2>
+
+      <form id="edit-product-form" class="product-form" enctype="multipart/form-data" novalidate>
+        <div class="form-group">
+          <label for="product-name">System Name</label>
+          <input type="text" id="product-name" name="productName" required value="Advanced Combat Script" autocomplete="off" />
+        </div>
+
+        <div class="form-group">
+          <label for="product-description">Description</label>
+          <textarea id="product-description" name="productDescription" rows="5" required>Includes VFX, damage system, and combos. Highly optimized and multiplayer ready.</textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="product-price">Price (USD)</label>
+          <input type="number" id="product-price" name="productPrice" required min="0" step="0.01" value="75" />
+        </div>
+
+        <div class="form-group">
+          <label for="product-category">Category</label>
+          <select id="product-category" name="productCategory" required>
+            <option value="scripting" selected>Scripting</option>
+            <option value="uiux">UI/UX</option>
+            <option value="admin">Admin Panels</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="product-image">Update Cover Image (optional)</label>
+          <input type="file" id="product-image" name="productImage" accept="image/*" />
+          <small>Leave empty to keep current image.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="store.html" class="btn btn-outline">Cancel</a>
+      </form>
+
+      <div id="edit-success" style="margin-top: 1rem; display: none;">
+        <p>Changes saved successfully. (Demo only)</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer" role="contentinfo" style="position: relative; z-index: 10; padding: 1rem 0; text-align:center; color:#00ffff; text-shadow: 0 0 5px #00ffff;">
+    <div class="container footer-container">
+      <p>&copy; 2025 RandomDevs. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Traducciones Español / Inglés para esta página
+    const translations = {
+      en: {
+        productNameLabel: "System Name",
+        productDescriptionLabel: "Description",
+        productPriceLabel: "Price (USD)",
+        productCategoryLabel: "Category",
+        productImageLabel: "Update Cover Image (optional)",
+        productImageNote: "Leave empty to keep current image.",
+        btnSave: "Save Changes",
+        btnCancel: "Cancel",
+        editSuccessMsg: "Changes saved successfully. (Demo only)",
+        navHome: "Home",
+        navStore: "My Store",
+        navPortfolio: "Portfolio",
+        navContact: "Contact",
+        navLogout: "Logout",
+      },
+      es: {
+        productNameLabel: "Nombre del Sistema",
+        productDescriptionLabel: "Descripción",
+        productPriceLabel: "Precio (USD)",
+        productCategoryLabel: "Categoría",
+        productImageLabel: "Actualizar imagen de portada (opcional)",
+        productImageNote: "Dejar vacío para mantener la imagen actual.",
+        btnSave: "Guardar Cambios",
+        btnCancel: "Cancelar",
+        editSuccessMsg: "Cambios guardados exitosamente. (Solo demo)",
+        navHome: "Inicio",
+        navStore: "Mi Tienda",
+        navPortfolio: "Portfolio",
+        navContact: "Contacto",
+        navLogout: "Cerrar sesión",
+      }
+    };
+
+    let currentLang = 'en';
+
+    // Referencias a elementos traducibles
+    const langToggleBtn = document.getElementById('lang-toggle');
+    const form = document.getElementById('edit-product-form');
+    const editSuccessDiv = document.getElementById('edit-success');
+
+    function translatePage(lang) {
+      currentLang = lang;
+
+      document.querySelector('label[for="product-name"]').textContent = translations[lang].productNameLabel;
+      document.querySelector('label[for="product-description"]').textContent = translations[lang].productDescriptionLabel;
+      document.querySelector('label[for="product-price"]').textContent = translations[lang].productPriceLabel;
+      document.querySelector('label[for="product-category"]').textContent = translations[lang].productCategoryLabel;
+      document.querySelector('label[for="product-image"]').textContent = translations[lang].productImageLabel;
+      document.querySelector('small').textContent = translations[lang].productImageNote;
+      form.querySelector('button[type="submit"]').textContent = translations[lang].btnSave;
+      form.querySelector('a.btn-outline').textContent = translations[lang].btnCancel;
+
+      // Navegación
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks[0].textContent = translations[lang].navHome;
+      navLinks[1].textContent = translations[lang].navStore;
+      navLinks[2].textContent = translations[lang].navPortfolio;
+      navLinks[3].textContent = translations[lang].navContact;
+      navLinks[4].textContent = translations[lang].navLogout;
+
+      // Mensaje éxito oculto al traducir
+      editSuccessDiv.style.display = 'none';
+
+      // Cambiar texto del botón toggle
+      langToggleBtn.textContent = lang === 'en' ? 'ES' : 'EN';
+      langToggleBtn.setAttribute('aria-pressed', lang === 'en' ? 'false' : 'true');
+    }
+
+    // Manejo del toggle de idioma
+    langToggleBtn.addEventListener('click', () => {
+      translatePage(currentLang === 'en' ? 'es' : 'en');
+    });
+
+    // Simula guardar formulario
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      // Aquí iría la llamada AJAX / fetch para guardar en servidor, demo solo muestra mensaje
+      editSuccessDiv.textContent = translations[currentLang].editSuccessMsg;
+      editSuccessDiv.style.display = 'block';
+
+      // Opcional: limpiar campo imagen al guardar para simular comportamiento
+      form.productImage.value = '';
+    });
+
+    // Inicializar página en inglés
+    translatePage('en');
+
+    // ===== PARTICULAS CON CANVAS =====
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    const particlesArray = [];
+    const maxParticles = 100;
+
+    function initCanvas() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 0.7;
+        this.speedY = (Math.random() - 0.5) * 0.7;
+        this.color = `rgba(0, 255, 255, ${Math.random() * 0.5 + 0.3})`;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x < 0 || this.x > width) this.speedX = -this.speedX;
+        if (this.y < 0 || this.y > height) this.speedY = -this.speedY;
+      }
+      draw() {
+        ctx.shadowColor = '#00ffff';
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function connectParticles() {
+      for (let a = 0; a < particlesArray.length; a++) {
+        for (let b = a + 1; b < particlesArray.length; b++) {
+          let dx = particlesArray[a].x - particlesArray[b].x;
+          let dy = particlesArray[a].y - particlesArray[b].y;
+          let distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < 150) {
+            ctx.strokeStyle = `rgba(0,255,255,${1 - distance / 150})`;
+            ctx.lineWidth = 1;
+            ctx.shadowColor = '#00ffff';
+            ctx.shadowBlur = 4;
+            ctx.beginPath();
+            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      particlesArray.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      connectParticles();
+      requestAnimationFrame(animate);
+    }
+
+    function initParticles() {
+      particlesArray.length = 0;
+      for (let i = 0; i < maxParticles; i++) {
+        particlesArray.push(new Particle());
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      initCanvas();
+      initParticles();
+    });
+
+    // Initialize canvas and particles on page load
+    initCanvas();
+    initParticles();
+    animate();
+  </script>
+</body>
+</html>
