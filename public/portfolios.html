@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Portafolios - RandomDevs PRO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* === Reset básico === */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(circle at center, #0f0c29, #302b63, #24243e);
+            color: #eee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem 3rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Contenedor general */
+        .container {
+            max-width: 900px;
+            width: 100%;
+            z-index: 2;
+        }
+
+        /* Header */
+        header.header {
+            width: 100%;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #22ffea;
+            padding-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            box-shadow:
+                0 0 10px #00fff7,
+                inset 0 0 15px #00fff7;
+            background: rgba(5, 5, 30, 0.6);
+            border-radius: 10px;
+            backdrop-filter: blur(8px);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 2rem;
+            color: #00fff7;
+            text-shadow:
+                0 0 5px #00fff7,
+                0 0 10px #00fff7,
+                0 0 20px #00fff7;
+            user-select: none;
+            position: relative;
+        }
+
+        .logo-badge {
+            background: linear-gradient(45deg, #ff00c8, #00fff7);
+            padding: 0.15rem 0.5rem;
+            margin-left: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            color: #111;
+            box-shadow:
+                0 0 8px #ff00c8,
+                0 0 15px #00fff7;
+            text-transform: uppercase;
+            vertical-align: middle;
+        }
+
+        /* Botones */
+        .btn {
+            padding: 0.6rem 1.2rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            user-select: none;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-outline {
+            color: #00fff7;
+            background: transparent;
+            border-color: #00fff7;
+            box-shadow: 0 0 8px #00fff7;
+        }
+
+        .btn-outline:hover,
+        .btn-outline:focus {
+            background: #00fff7;
+            color: #111;
+            box-shadow:
+                0 0 15px #00fff7,
+                inset 0 0 30px #00fff7;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #00fff7, #00c8ff);
+            border: none;
+            border-radius: 12px;
+            padding: 0.7rem 1.2rem;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #111;
+            cursor: pointer;
+            box-shadow:
+                0 0 15px #00fff7,
+                0 0 30px #00c8ff inset;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background: linear-gradient(45deg, #00c8ff, #00fff7);
+            box-shadow:
+                0 0 25px #00fff7,
+                0 0 40px #00fff7 inset;
+            outline: none;
+            color: #000;
+        }
+
+        /* Títulos */
+        h1,
+        h2 {
+            text-align: center;
+            color: #00fff7;
+            text-shadow:
+                0 0 10px #00fff7,
+                0 0 20px #00fff7;
+            user-select: none;
+        }
+
+        /* Lista de portafolios */
+        .portfolio-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .portfolio-card {
+            background: rgba(15, 15, 40, 0.7);
+            border-radius: 15px;
+            padding: 1rem;
+            box-shadow:
+                0 0 20px #00fff7,
+                inset 0 0 40px #00fff7;
+            backdrop-filter: blur(12px);
+            color: #e0f7f9;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            outline-offset: 3px;
+        }
+
+        .portfolio-card:hover,
+        .portfolio-card:focus-visible {
+            transform: scale(1.03);
+            box-shadow:
+                0 0 30px #00fff7,
+                inset 0 0 60px #00fff7;
+            outline: 2px solid #00fff7;
+        }
+
+        .portfolio-card h3 {
+            margin-bottom: 0.5rem;
+            color: #00fff7;
+        }
+
+        .portfolio-card p {
+            font-size: 0.9rem;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+            color: #a0f0ff;
+        }
+
+        .portfolio-card small {
+            font-style: italic;
+            color: #44c4d7;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 15, 40, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: rgba(5, 5, 30, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow:
+                0 0 25px #00fff7,
+                inset 0 0 50px #00fff7;
+            width: 90%;
+            max-width: 650px;
+            max-height: 90vh;
+            overflow-y: auto;
+            color: #e0f7f9;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #00fff7;
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            color: #00fff7;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .modal-close:hover,
+        .modal-close:focus {
+            color: #00c8ff;
+            outline: none;
+        }
+
+        /* Formulario modal */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            color: #66fff9;
+            margin-bottom: 0.3rem;
+            text-shadow: 0 0 6px #00fff7;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        select,
+        textarea,
+        input[type="file"] {
+            background: transparent;
+            border: 2px solid #00fff7;
+            border-radius: 10px;
+            color: #e0f7f9;
+            font-size: 1rem;
+            padding: 0.6rem 1rem;
+            margin-bottom: 1rem;
+            box-shadow:
+                inset 0 0 8px #00fff7;
+            transition: border-color 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #44c4d7;
+            font-style: italic;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #00fff7;
+            box-shadow:
+                0 0 10px #00fff7,
+                inset 0 0 15px #00fff7;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        /* Scrollbar personalizado modal */
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #00fff7;
+            border-radius: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .portfolio-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Contenedor multimedia en detalle */
+        .media-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .media-container img,
+        .media-container video {
+            max-width: 48%;
+            border-radius: 10px;
+            box-shadow:
+                0 0 10px #00fff7,
+                inset 0 0 15px #00fff7;
+        }
+
+        .media-container video {
+            background: #000;
+        }
+
+        /* Canvas partículas */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="particles-js"></canvas>
+
+    <header class="header">
+        <h1 class="logo">RandomDevs <span class="logo-badge">PRO</span></h1>
+    </header>
+
+    <!-- Modal Promocionados -->
+    <div id="promotedModal" hidden aria-modal="true" role="dialog" aria-labelledby="promotedModalTitle" tabindex="-1"
+        style="position: fixed; top: 10%; left: 50%; transform: translateX(-50%); background: #111; color: #0ff; padding: 20px; border-radius: 10px; max-width: 400px; max-height: 80vh; overflow-y: auto; z-index: 1000;">
+        <h2 id="promotedModalTitle">Portafolios Promocionados</h2>
+        <button id="promotedModalCloseBtn" aria-label="Cerrar modal" style="float: right;">✖</button>
+        <ul id="promotedList" style="list-style: none; padding: 0;"></ul>
+        <p id="noPromotions" style="display:none;">No tienes promociones activas.</p>
+    </div>
+
+
+    <div class="container">
+        <section>
+            <h2>Portafolios</h2>
+            <button id="addPortfolioBtn" class="btn btn-primary" aria-label="Agregar nuevo portafolio">Agregar
+                Portafolio</button>
+
+            <div id="portfolioList" class="portfolio-list" tabindex="0" aria-live="polite"
+                aria-label="Lista de portafolios">
+                <!-- Portafolios renderizados -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal para Crear/Editar -->
+    <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"
+        aria-describedby="modalDesc" tabindex="-1" hidden>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Nuevo Portafolio</h2>
+                <button id="modalCloseBtn" class="modal-close" aria-label="Cerrar modal">&times;</button>
+            </div>
+            <form id="portfolioForm">
+                <input type="hidden" id="portfolioId" />
+
+                <label for="portfolioName">Nombre *</label>
+                <input type="text" id="portfolioName" name="portfolioName" required minlength="3" maxlength="40"
+                    autocomplete="off" />
+
+                <label for="portfolioDescription">Descripción *</label>
+                <textarea id="portfolioDescription" name="portfolioDescription" required minlength="10" maxlength="300"
+                    placeholder="Describe tu portafolio"></textarea>
+
+                <label for="portfolioRole">Rol en Roblox Studio *</label>
+                <select id="portfolioRole" name="portfolioRole" required>
+                    <option value="" disabled selected>Selecciona tu rol</option>
+                    <option value="Desarrollador">Desarrollador</option>
+                    <option value="Diseñador">Diseñador</option>
+                    <option value="Productor">Productor</option>
+                    <option value="Tester">Tester</option>
+                    <option value="Compositor">Compositor</option>
+                    <option value="Otro">Otro</option>
+                </select>
+
+                <label for="portfolioLanguage">Lenguaje Favorito *</label>
+                <select id="portfolioLanguage" name="portfolioLanguage" required>
+                    <option value="" disabled selected>Selecciona un lenguaje</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="Python">Python</option>
+                    <option value="Lua">Lua</option>
+                </select>
+
+                <label for="portfolioGithub">URL GitHub *</label>
+                <input type="url" id="portfolioGithub" name="portfolioGithub" placeholder="https://github.com/usuario"
+                    required />
+
+                <label for="portfolioImagesFiles">Imágenes (puedes seleccionar varias)</label>
+                <input type="file" id="portfolioImagesFiles" name="portfolioImagesFiles" accept="image/*" multiple />
+
+                <label for="portfolioVideosFiles">Videos (mp4, webm)</label>
+                <input type="file" id="portfolioVideosFiles" name="portfolioVideosFiles" accept="video/mp4,video/webm"
+                    multiple />
+
+                <!-- Contenedor para previsualizar archivos cargados -->
+                <div id="mediaPreviewContainer" style="margin-top:10px;">
+                    <p><strong>Archivos cargados:</strong></p>
+                    <ul id="mediaPreviewList"
+                        style="list-style:none; padding-left:0; display:flex; flex-wrap:wrap; gap:10px;"></ul>
+                </div>
+
+                <div class="form-buttons" style="margin-top:15px;">
+                    <button type="button" id="promoteBtn">Promocionar</button>
+                    <button type="button" id="deleteBtn">Eliminar</button>
+                    <button type="submit" class="btn-primary">Guardar</button>
+                    <button type="button" id="cancelBtn" class="btn-outline">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal solo lectura (detalles) -->
+    <div id="modalReadOnly" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalReadOnlyTitle"
+        aria-describedby="modalReadOnlyDesc" tabindex="-1" hidden>
+        <div class="modal-content" tabindex="0">
+            <div class="modal-header">
+                <h2 id="modalReadOnlyTitle">Detalles Portafolio</h2>
+                <button id="modalReadOnlyCloseBtn" class="modal-close" aria-label="Cerrar modal">&times;</button>
+            </div>
+            <div id="modalReadOnlyBody" tabindex="0" aria-live="polite" style="outline:none;">
+                <!-- Detalles aquí -->
+            </div>
+        </div>
+    </div>
+
+    <div id="promoteModal" class="modal" hidden>
+        <div class="modal-content">
+            <button type="button" id="promoteModalCloseBtn" style="float:right;">X</button>
+            <h3>Promocionar Portafolio</h3>
+            <p><strong>DevCoins disponibles:</strong> <span id="devCoinsCount">0</span></p>
+            <label for="coinsToSpend">¿Cuántas DevCoins quieres gastar?</label>
+            <input type="number" id="coinsToSpend" min="1" step="1" value="1" />
+            <br><br>
+            <button id="confirmPromoteBtn" style="background-color:#2ecc71; color:white;">Confirmar</button>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+
+<script>
+    (() => {
+        const API_BASE = 'http://localhost:3000';
+
+        const currentUserId = 'user123';
+
+        // --- DevCoins functions (fetch-based) ---
+        async function getDevCoins() {
+            try {
+                const res = await fetch(`${API_BASE}/devcoins/${currentUserId}`);
+                if (!res.ok) throw new Error('Error fetching DevCoins');
+                const data = await res.json();
+                return data.coins || 0;
+            } catch (e) {
+                console.error(e);
+                return 0;
+            }
+        }
+
+        async function setDevCoins(amount) {
+            try {
+                const res = await fetch(`${API_BASE}/devcoins/${currentUserId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ coins: Math.max(0, parseInt(amount, 10)) }),
+                });
+                if (!res.ok) throw new Error('Error setting DevCoins');
+                updateCurrencyCounter();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function addDevCoins(amount) {
+            const current = await getDevCoins();
+            await setDevCoins(current + parseInt(amount, 10));
+        }
+
+        async function subtractDevCoins(amount) {
+            const current = await getDevCoins();
+            if (amount > current) return false;
+            await setDevCoins(current - amount);
+            return true;
+        }
+
+        async function updateCurrencyCounter() {
+            const devCoinsCount = document.getElementById('devCoinsCount');
+            if (devCoinsCount) {
+                const coins = await getDevCoins();
+                devCoinsCount.textContent = coins;
+            }
+        }
+
+        // --- Particle Canvas (sin cambios) ---
+        const canvas = document.getElementById('particles-js');
+        if (!canvas) return console.error('No se encontró el canvas con ID "particles-js"');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles;
+
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+
+        function initParticles() {
+            resizeCanvas();
+            particles = [];
+            for (let i = 0; i < 80; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: 1 + Math.random() * 2,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    alpha: 0.7 + Math.random() * 0.3,
+                });
+            }
+            animate();
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > width) p.vx *= -1;
+                if (p.y < 0 || p.y > height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0,255,247,${p.alpha})`;
+                ctx.shadowColor = '#00fff7';
+                ctx.shadowBlur = 8;
+                ctx.fill();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        initParticles();
+
+        // --- Portfolios fetch functions ---
+        async function fetchPortfolios() {
+            try {
+                const res = await fetch(`${API_BASE}/portfolios`);
+                if (!res.ok) throw new Error('Error fetching portfolios');
+                return await res.json();
+            } catch (e) {
+                console.error(e);
+                return [];
+            }
+        }
+
+        async function savePortfolio(portfolio) {
+            try {
+                if (portfolio.id) {
+                    // Update existing portfolio
+                    const res = await fetch(`${API_BASE}/portfolios/${portfolio.id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(portfolio),
+                    });
+                    if (!res.ok) throw new Error('Error updating portfolio');
+                    return await res.json();
+                } else {
+                    // Create new portfolio
+                    const res = await fetch(`${API_BASE}/portfolios`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(portfolio),
+                    });
+                    if (!res.ok) throw new Error('Error creating portfolio');
+                    return await res.json();
+                }
+            } catch (e) {
+                console.error(e);
+                return null;
+            }
+        }
+
+        async function deletePortfolio(id) {
+            try {
+                const res = await fetch(`${API_BASE}/portfolios/${id}`, {
+                    method: 'DELETE',
+                });
+                if (!res.ok) throw new Error('Error deleting portfolio');
+                return true;
+            } catch (e) {
+                console.error(e);
+                return false;
+            }
+        }
+
+        // --- Promotions fetch functions ---
+        async function fetchPromotions() {
+            try {
+                const res = await fetch(`${API_BASE}/promotions`);
+                if (!res.ok) throw new Error('Error fetching promotions');
+                return await res.json();
+            } catch (e) {
+                console.error(e);
+                return [];
+            }
+        }
+
+        async function savePromotion(promotion) {
+            try {
+                const res = await fetch(`${API_BASE}/promotions`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(promotion),
+                });
+                if (!res.ok) throw new Error('Error saving promotion');
+                return await res.json();
+            } catch (e) {
+                console.error(e);
+                return null;
+            }
+        }
+
+        async function deletePortfolioFromServer(id) {
+            try {
+                const res = await fetch(`/api/portfolios/${id}`, {
+                    method: 'DELETE',
+                });
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.error || 'Error eliminando portafolio');
+                }
+                return true;
+            } catch (error) {
+                alert('Error al eliminar portafolio: ' + error.message);
+                return false;
+            }
+        }
+
+        // --- DOM references ---
+        const portfolioListEl = document.getElementById('portfolioList');
+        const modal = document.getElementById('modal');
+        const modalReadOnly = document.getElementById('modalReadOnly');
+        const form = document.getElementById('portfolioForm');
+        const addBtn = document.getElementById('addPortfolioBtn');
+        const deleteBtn = document.getElementById('deleteBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        const modalReadOnlyCloseBtn = document.getElementById('modalReadOnlyCloseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const promoteBtn = document.getElementById('promoteBtn');
+        const promoteModal = document.getElementById('promoteModal');
+        const promoteModalCloseBtn = document.getElementById('promoteModalCloseBtn');
+        const devCoinsCount = document.getElementById('devCoinsCount');
+        const coinsToSpendInput = document.getElementById('coinsToSpend');
+        const confirmPromoteBtn = document.getElementById('confirmPromoteBtn');
+        const mediaListEl = document.getElementById('mediaPreviewList');
+        const mediaFilesInputImages = document.getElementById('portfolioImagesFiles');
+        const mediaFilesInputVideos = document.getElementById('portfolioVideosFiles');
+
+        // Header promotions button & modal (igual que antes)
+        const promotionsHeaderBtn = document.createElement('button');
+        promotionsHeaderBtn.textContent = 'Promocionados';
+        promotionsHeaderBtn.style.cssText = 'position: fixed; top: 10px; right: 10px; z-index: 1000; padding: 8px 12px; background:#00fff7; color:#000; border:none; border-radius: 5px; cursor:pointer;';
+        document.body.appendChild(promotionsHeaderBtn);
+
+        const promotionsModal = document.createElement('div');
+        promotionsModal.id = 'promotionsModal';
+        promotionsModal.style.cssText = `
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: #222; color: #0ff; padding: 20px; border-radius: 10px;
+        max-width: 90vw; max-height: 80vh; overflow-y: auto; z-index: 1100;
+        display: none;
+    `;
+        promotionsModal.innerHTML = `
+        <h2>Portafolios Promocionados</h2>
+        <button id="promotionsModalCloseBtn" style="position:absolute; top:10px; right:10px; background:#0ff; color:#222; border:none; border-radius:5px; padding: 5px 10px; cursor:pointer;">Cerrar</button>
+        <ul id="promotionsList" style="list-style:none; padding: 0;"></ul>
+    `;
+        document.body.appendChild(promotionsModal);
+
+        const promotionsListEl = document.getElementById('promotionsList');
+        const promotionsModalCloseBtn = document.getElementById('promotionsModalCloseBtn');
+
+        // --- Variables de estado ---
+        let portfolios = [];
+        let promotions = [];
+        let editingId = null;
+        let mediaUrls = [];
+
+        // --- Media handling igual que antes ---
+        function handleFilesInput(event) {
+            const files = Array.from(event.target.files);
+            if (files.length === 0) return;
+
+            const readers = files.map(file => {
+                return new Promise((resolve, reject) => {
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(reader.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(file);
+                    } else if (file.type.startsWith('video/')) {
+                        const objectUrl = URL.createObjectURL(file);
+                        resolve(objectUrl);
+                    } else {
+                        reject(new Error('Tipo de archivo no soportado'));
+                    }
+                });
+            });
+
+            Promise.all(readers).then(results => {
+                results.forEach(url => {
+                    if (!mediaUrls.includes(url)) mediaUrls.push(url);
+                });
+                renderMediaList();
+            }).catch(err => {
+                console.error('Error procesando archivos:', err);
+                alert('Uno o más archivos no se pudieron procesar.');
+            });
+
+            event.target.value = '';
+        }
+
+        function renderMediaList() {
+            mediaListEl.innerHTML = '';
+            mediaUrls.forEach((url, idx) => {
+                const li = document.createElement('li');
+                li.style.display = 'flex';
+                li.style.flexDirection = 'column';
+                li.style.alignItems = 'center';
+
+                const mediaEl = url.startsWith('data:video')
+                    ? Object.assign(document.createElement('video'), { src: url, controls: true })
+                    : Object.assign(document.createElement('img'), { src: url, alt: 'Media' });
+
+                Object.assign(mediaEl.style, {
+                    maxWidth: '150px',
+                    maxHeight: '100px',
+                    display: 'block',
+                });
+
+                const delBtn = document.createElement('button');
+                delBtn.textContent = 'X';
+                delBtn.addEventListener('click', () => {
+                    mediaUrls.splice(idx, 1);
+                    renderMediaList();
+                });
+
+                li.appendChild(mediaEl);
+                li.appendChild(delBtn);
+                mediaListEl.appendChild(li);
+            });
+        }
+
+        mediaFilesInputImages.addEventListener('change', handleFilesInput);
+        mediaFilesInputVideos.addEventListener('change', handleFilesInput);
+
+        // --- Render portfolios ---
+        async function renderPortfolios() {
+            portfolios = await fetchPortfolios();
+            promotions = await fetchPromotions();
+
+            const now = Date.now();
+            // Limpiar promociones expiradas del array
+            promotions = promotions.filter(pr => pr.expiresAt > now);
+
+            const myPortfolio = portfolios.filter(p => p.userId === currentUserId);
+            const others = portfolios.filter(p => p.userId !== currentUserId);
+            const activePromotionIds = promotions.map(pr => pr.portfolioId);
+
+            portfolioListEl.innerHTML = '';
+
+            [...myPortfolio, ...others].forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'portfolio-card';
+                card.tabIndex = 0;
+                card.setAttribute('role', 'button');
+                card.setAttribute('aria-label', p.userId === currentUserId
+                    ? `Editar tu portafolio ${p.name}`
+                    : `Ver detalles del portafolio ${p.name}`);
+
+                card.innerHTML = `
+                <h3>${p.name}</h3>
+                <p>${p.description.slice(0, 80)}${p.description.length > 80 ? '...' : ''}</p>
+                <small>Rol: ${p.role}</small>
+            `;
+
+                if (p.userId === currentUserId) {
+                    card.style.border = '2px solid #00fff7';
+                    card.style.backgroundColor = 'rgba(0, 255, 247, 0.1)';
+                }
+
+                if (activePromotionIds.includes(p.id)) {
+                    card.style.boxShadow = '0 0 10px 3px #00fff7';
+                }
+
+                function handleCardOpen() {
+                    if (p.userId === currentUserId) {
+                        openModal(p);
+                    } else {
+                        openReadOnlyModal(p);
+                    }
+                }
+
+                card.addEventListener('click', handleCardOpen);
+                card.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleCardOpen();
+                    }
+                });
+
+                portfolioListEl.appendChild(card);
+            });
+
+            updateAddButtonVisibility();
+            updateCurrencyCounter();
+        }
+
+        // --- Modal functions ---
+        function openModal(portfolio = null) {
+            modal.hidden = false;
+            modal.classList.add('active');
+            if (portfolio) {
+                editingId = portfolio.id;
+                form.name.value = portfolio.name;
+                form.description.value = portfolio.description;
+                form.role.value = portfolio.role;
+                mediaUrls = [...(portfolio.media || [])];
+            } else {
+                editingId = null;
+                form.reset();
+                mediaUrls = [];
+            }
+            renderMediaList();
+            deleteBtn.style.display = editingId ? 'inline-block' : 'none';
+            addBtn.disabled = true;
+            coinsToSpendInput.value = '';
+            promoteBtn.disabled = true;
+        }
+
+        function closeModal() {
+            modal.hidden = true;
+            modal.classList.remove('active');
+            editingId = null;
+            mediaUrls = [];
+            form.reset();
+            renderMediaList();
+            addBtn.disabled = false;
+        }
+
+        function openReadOnlyModal(portfolio) {
+            modalReadOnly.hidden = false;
+            modalReadOnly.classList.add('active');
+            const container = modalReadOnly.querySelector('.readOnlyContent');
+            container.innerHTML = `
+            <h2>${portfolio.name}</h2>
+            <p>${portfolio.description}</p>
+            <p><strong>Rol:</strong> ${portfolio.role}</p>
+            <div class="media-container" style="display:flex; flex-wrap:wrap; gap:10px;">
+                ${portfolio.media ? portfolio.media.map(url => {
+                if (url.match(/\.(mp4|webm|ogg)$/i)) {
+                    return `<video src="${url}" controls style="max-width:150px; max-height:100px;"></video>`;
+                } else {
+                    return `<img src="${url}" alt="Media" style="max-width:150px; max-height:100px;">`;
+                }
+            }).join('') : ''}
+            </div>
+        `;
+        }
+
+        function closeReadOnlyModal() {
+            modalReadOnly.hidden = true;
+            modalReadOnly.classList.remove('active');
+        }
+
+        // --- Event listeners ---
+        addBtn.addEventListener('click', () => openModal());
+
+        cancelBtn.addEventListener('click', () => {
+            if (confirm('¿Cancelar edición? Los cambios no se guardarán.')) {
+                closeModal();
+            }
+        });
+
+        modalCloseBtn.addEventListener('click', closeModal);
+        modalReadOnlyCloseBtn.addEventListener('click', closeReadOnlyModal);
+
+        form.addEventListener('input', () => {
+            addBtn.disabled = !(form.name.value.trim() && form.description.value.trim() && form.role.value.trim());
+        });
+
+        deleteBtn.addEventListener('click', async () => {
+            if (editingId === null) return;
+            if (!confirm('¿Seguro que deseas eliminar este portafolio? Esta acción es irreversible.')) return;
+
+            const success = await deletePortfolioFromServer(editingId);
+            if (!success) return;
+
+            portfolios = portfolios.filter(p => p.id !== editingId);
+            savePortfolios();
+            updateAddButtonVisibility();
+            renderPortfolios();
+            closeModal();
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!form.name.value.trim() || !form.description.value.trim() || !form.role.value.trim()) {
+                alert('Por favor, rellena todos los campos.');
+                return;
+            }
+
+            const portfolio = {
+                id: editingId,
+                name: form.name.value.trim(),
+                description: form.description.value.trim(),
+                role: form.role.value.trim(),
+                media: mediaUrls,
+                userId: currentUserId,
+            };
+
+            const saved = await savePortfolio(portfolio);
+            if (saved) {
+                alert('Portafolio guardado.');
+                await renderPortfolios();
+                closeModal();
+            } else {
+                alert('Error al guardar portafolio.');
+            }
+        });
+
+        // --- Promotions ---
+
+        promoteBtn.addEventListener('click', () => {
+            promoteModal.hidden = false;
+            promoteModal.classList.add('active');
+            coinsToSpendInput.value = '';
+        });
+
+        promoteModalCloseBtn.addEventListener('click', () => {
+            promoteModal.hidden = true;
+            promoteModal.classList.remove('active');
+        });
+
+        confirmPromoteBtn.addEventListener('click', async () => {
+            const coinsToSpend = parseInt(coinsToSpendInput.value, 10);
+            if (isNaN(coinsToSpend) || coinsToSpend < 50) {
+                alert('Debes gastar al menos 50 DevCoins para promocionar.');
+                return;
+            }
+            const currentCoins = await getDevCoins();
+            if (coinsToSpend > currentCoins) {
+                alert('No tienes suficientes DevCoins.');
+                return;
+            }
+            if (!editingId) {
+                alert('Error: no hay portafolio seleccionado para promocionar.');
+                return;
+            }
+
+            const spent = await subtractDevCoins(coinsToSpend);
+            if (!spent) {
+                alert('No se pudo gastar DevCoins.');
+                return;
+            }
+
+            // Guardar promoción (por ejemplo, la promo dura 1 día)
+            const now = Date.now();
+            const expiresAt = now + 24 * 60 * 60 * 1000;
+
+            const promotion = {
+                portfolioId: editingId,
+                userId: currentUserId,
+                spentCoins: coinsToSpend,
+                createdAt: now,
+                expiresAt,
+            };
+
+            const savedPromo = await savePromotion(promotion);
+            if (savedPromo) {
+                alert('Portafolio promocionado exitosamente!');
+                promoteModal.hidden = true;
+                promoteModal.classList.remove('active');
+                await renderPortfolios();
+            } else {
+                alert('Error al promocionar portafolio.');
+            }
+        });
+
+        // Actualizar botón promocionar según DevCoins
+        form.addEventListener('input', async () => {
+            const coins = await getDevCoins();
+            promoteBtn.disabled = coins < 50 || !editingId;
+        });
+
+        // Mostrar promociones en modal de header
+        promotionsHeaderBtn.addEventListener('click', async () => {
+            promotionsModal.style.display = 'block';
+            promotions = await fetchPromotions();
+
+            const now = Date.now();
+            promotions = promotions.filter(pr => pr.expiresAt > now);
+
+            const portfolioMap = {};
+            portfolios.forEach(p => {
+                portfolioMap[p.id] = p;
+            });
+
+            promotionsListEl.innerHTML = '';
+            if (promotions.length === 0) {
+                promotionsListEl.innerHTML = '<li>No hay portafolios promocionados actualmente.</li>';
+                return;
+            }
+
+            promotions.forEach(pr => {
+                const p = portfolioMap[pr.portfolioId];
+                if (p) {
+                    const li = document.createElement('li');
+                    li.style.border = '1px solid #0ff';
+                    li.style.marginBottom = '10px';
+                    li.style.padding = '10px';
+                    li.style.borderRadius = '5px';
+                    li.innerHTML = `
+                    <strong>${p.name}</strong><br>
+                    ${p.description.slice(0, 100)}...<br>
+                    <em>Promocionado hasta: ${new Date(pr.expiresAt).toLocaleString()}</em>
+                `;
+                    promotionsListEl.appendChild(li);
+                }
+            });
+        });
+
+        promotionsModalCloseBtn.addEventListener('click', () => {
+            promotionsModal.style.display = 'none';
+        });
+
+        // --- Control de visibilidad botón agregar ---
+        function updateAddButtonVisibility() {
+            const myPortfolioCount = portfolios.filter(p => p.userId === currentUserId).length;
+            addBtn.style.display = myPortfolioCount >= 3 ? 'none' : 'inline-block';
+        }
+
+        // --- Inicialización ---
+        renderPortfolios();
+    })();
+</script>
+
+</body>
+
+</html>

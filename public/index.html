@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RandomDevs - Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a23;
+      color: #00fff7;
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Links */
+    a {
+      color: #00fff7;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      cursor: pointer;
+      outline-offset: 3px;
+    }
+
+    a:hover,
+    a:focus {
+      color: #22ffea;
+      outline: none;
+      text-shadow: 0 0 15px #22ffea;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* Header */
+    .header {
+      padding: 1rem 0 1.5rem;
+      background: rgba(0, 255, 255, 0.1);
+      box-shadow: 0 0 25px #00fff7 inset;
+      user-select: none;
+    }
+
+    .header-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-lang {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.8rem;
+      color: #00fff7;
+      text-shadow: 0 0 15px #00fff7;
+      margin: 0 auto;
+      user-select: text;
+    }
+
+    .logo-badge {
+      background: #00fff7;
+      color: #0a0a23;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 3px 8px;
+      margin-left: 8px;
+      border-radius: 14px;
+      vertical-align: middle;
+      text-shadow: none;
+      user-select: none;
+    }
+
+    /* Toggle idioma */
+    #lang-toggle {
+      background: transparent;
+      border: 2px solid #00fff7;
+      color: #00fff7;
+      padding: 0.3rem 0.75rem;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 0 12px #00fff7, inset 0 0 10px #00fff7;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    #lang-toggle:hover,
+    #lang-toggle:focus {
+      background: #00fff7;
+      color: #0a0a23;
+      outline: none;
+      box-shadow: 0 0 20px #22ffea, inset 0 0 15px #22ffea;
+    }
+
+    /* Navegación */
+    .nav {
+      width: 100%;
+    }
+
+    .nav-list {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      gap: 0.7rem;
+      justify-content: center;
+      user-select: none;
+    }
+
+    .nav-list li {
+      margin: 0;
+    }
+
+    .nav-link {
+      display: inline-block;
+      padding: 0.45rem 1rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-shadow: 0 0 6px #00fff7;
+      transition: background 0.3s ease, color 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus {
+      background: #00fff7;
+      color: #0a0a23;
+      outline: none;
+      text-shadow: none;
+    }
+
+    /* Buttons */
+    .btn {
+      user-select: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 700;
+      border-radius: 14px;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #00fff7, #22ffea);
+      color: #0a0a23;
+      padding: 0.6rem 1.6rem;
+      box-shadow: 0 0 15px #22ffea, inset 0 0 12px #00fff7;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background: linear-gradient(135deg, #22ffea, #00fff7);
+      box-shadow: 0 0 25px #00fff7, inset 0 0 15px #22ffea;
+      color: #fff;
+      outline: none;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #00fff7;
+      color: #00fff7;
+      padding: 0.55rem 1.4rem;
+      box-shadow: 0 0 12px #00fff7;
+      text-shadow: 0 0 6px #00fff7;
+    }
+
+    .btn-outline:hover,
+    .btn-outline:focus {
+      background: #00fff7;
+      color: #0a0a23;
+      box-shadow: 0 0 20px #22ffea;
+      text-shadow: none;
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #ff00f7, #ea22ff);
+      color: #0a0a23;
+      padding: 0.55rem 1.6rem;
+      box-shadow: 0 0 15px #ea22ff, inset 0 0 12px #ff00f7;
+    }
+
+    .btn-secondary:hover,
+    .btn-secondary:focus {
+      background: linear-gradient(135deg, #ea22ff, #ff00f7);
+      box-shadow: 0 0 25px #ff00f7, inset 0 0 15px #ea22ff;
+      color: #fff;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 3rem 0 5rem;
+    }
+
+    .hero-container {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .hero-text {
+      flex: 1 1 350px;
+      max-width: 500px;
+    }
+
+    .hero-text h1 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 18px #00fff7;
+    }
+
+    .highlight {
+      color: #22ffea;
+      text-shadow: 0 0 20px #22ffea;
+    }
+
+    .hero-text p {
+      font-size: 1.15rem;
+      margin-bottom: 2rem;
+      color: #9ef9f9;
+      text-shadow: 0 0 10px #00fff7;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-image {
+      flex: 1 1 350px;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .hero-image img {
+      max-width: 100%;
+      height: auto;
+      filter: drop-shadow(0 0 15px #00fff7);
+      border-radius: 20px;
+    }
+
+    /* Marketplace */
+    .marketplace,
+    .portfolio {
+      padding: 3rem 0 5rem;
+    }
+
+    .marketplace header,
+    .portfolio header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .marketplace h2,
+    .portfolio h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-shadow: 0 0 15px #00fff7;
+    }
+
+    .filters {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    select,
+    input[type="search"] {
+      padding: 0.5rem 1rem;
+      border-radius: 14px;
+      border: 2px solid #00fff7;
+      background: transparent;
+      color: #00fff7;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: inset 0 0 12px #00fff7;
+      transition: border-color 0.3s ease;
+      min-width: 200px;
+    }
+
+    select:focus,
+    input[type="search"]:focus {
+      outline: none;
+      border-color: #22ffea;
+      box-shadow: 0 0 15px #22ffea, inset 0 0 15px #22ffea;
+      background: rgba(0, 255, 255, 0.1);
+    }
+
+    .product-grid,
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card,
+    .portfolio-card {
+      background: rgba(0, 255, 255, 0.07);
+      border-radius: 20px;
+      padding: 1.6rem 1.4rem;
+      box-shadow: 0 0 20px #00fff7, inset 0 0 30px #00fff7;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover,
+    .product-card:focus,
+    .portfolio-card:hover,
+    .portfolio-card:focus {
+      transform: scale(1.05);
+      box-shadow: 0 0 35px #22ffea, inset 0 0 40px #22ffea;
+    }
+
+    .product-card h3,
+    .portfolio-card h3 {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: #00fff7;
+      text-shadow: 0 0 8px #00fff7;
+    }
+
+    .product-card p,
+    .portfolio-card p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      color: #9ef9f9;
+      text-shadow: 0 0 8px #00fff7;
+    }
+
+    .price {
+      font-weight: 800;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+      color: #22ffea;
+      text-shadow: 0 0 12px #00fff7;
+    }
+
+    /* Avatar */
+    .avatar {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 1rem;
+      font-weight: 800;
+      font-size: 2rem;
+      color: #0a0a23;
+      background: #00fff7;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 12px #00fff7;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 1.5rem 0;
+      text-align: center;
+      border-top: 1px solid #00444d;
+    }
+
+    .footer-container p {
+      color: #00fff7;
+      font-weight: 600;
+      font-size: 1rem;
+      text-shadow: 0 0 10px #00fff7;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 15, 40, 0.95);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-content {
+      background: rgba(5, 5, 30, 0.8);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 25px #00fff7, inset 0 0 50px #00fff7;
+      width: 90%;
+      max-width: 650px;
+      max-height: 90vh;
+      overflow-y: auto;
+      color: #e0f7f9;
+      position: relative;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .modal-header h2 {
+      color: #00fff7;
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      color: #00fff7;
+      cursor: pointer;
+    }
+
+    .modal-close:hover,
+    .modal-close:focus {
+      color: #00c8ff;
+    }
+
+    /* Accessibility */
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      border: 0 !important;
+    }
+
+    /* Disabled links */
+    .nav-link.disabled {
+      cursor: not-allowed;
+      box-shadow: none;
+      filter: grayscale(80%);
+    }
+
+    /* ===== Mejoras generales ===== */
+    body {
+      padding-bottom: 3rem;
+    }
+
+    /* ===== En móviles pequeños (hasta 480px) ===== */
+    @media (max-width: 480px) {
+      .header {
+        padding: 0.6rem 0 1rem;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        margin: 0;
+      }
+
+      .logo-badge {
+        font-size: 0.75rem;
+        margin-left: 4px;
+      }
+
+      .logo-lang {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .nav-list {
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+      }
+
+      .nav-link {
+        width: 100%;
+        text-align: center;
+        padding: 0.5rem 0;
+      }
+
+      .hero {
+        padding: 2rem 0 3rem;
+      }
+
+      .hero-text h1 {
+        font-size: 2rem;
+        line-height: 1.3;
+        text-align: center;
+      }
+
+      .hero-text p {
+        font-size: 1rem;
+        text-align: center;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+        gap: 0.8rem;
+        width: 100%;
+        align-items: center;
+      }
+
+      .hero-cta .btn {
+        width: 80%;
+        text-align: center;
+      }
+
+      .hero-image {
+        margin-top: 1.5rem;
+      }
+
+      .marketplace,
+      .portfolio {
+        padding: 2rem 0 3rem;
+      }
+
+      .marketplace header h2,
+      .portfolio header h2 {
+        font-size: 1.8rem;
+      }
+
+      .filters {
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+
+      select,
+      input[type="search"] {
+        min-width: 100%;
+      }
+    }
+
+    /* ===== En tablets (481px a 768px) ===== */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .hero {
+        padding: 2.5rem 0 4rem;
+      }
+
+      .hero-text h1 {
+        font-size: 2.4rem;
+        text-align: center;
+      }
+
+      .hero-text p {
+        font-size: 1.1rem;
+        text-align: center;
+      }
+
+      .hero-cta {
+        justify-content: center;
+      }
+
+      .hero-cta .btn {
+        width: auto;
+      }
+
+      .marketplace header h2,
+      .portfolio header h2 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="logo-lang" aria-label="Logo y selector de idioma">
+        <div class="logo" aria-label="ClearlyDev PRO logo">RandomDevs<span class="logo-badge">Beta</span></div>
+        <button id="lang-toggle" class="btn btn-tertiary" type="button" aria-pressed="false"
+          aria-label="Cambiar idioma">EN</button>
+      </div>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <ul class="nav-list" id="nav-list">
+          <li><a href="index.html" class="nav-link active" data-translate-key="navHome">Inicio</a></li>
+          <li><a href="store.html" class="nav-link" data-translate-key="navStore">Tienda</a></li>
+          <li><a href="portfolios.html" class="nav-link" data-translate-key="navPortfolio">Portfolio</a></li>
+          <li><a href="contact.html" class="nav-link" data-translate-key="navContact">Contacto</a></li>
+          <li>
+            <a id="discord-login-btn"
+              href="https://discord.com/oauth2/authorize?client_id=1399452619218489444&response_type=code&redirect_uri=http%3A%2F%2F127.0.0.1%3A5500%2Findex.html&scope=identify"
+              class="nav-link btn btn-primary"
+              style="background: #5865F2; box-shadow: 0 0 20px #5865F2, inset 0 0 12px #5865F2;"
+              data-translate-key="navDiscordLogin">
+              Sign in with Discord
+            </a>
+            <a id="logout-btn" class="nav-link btn btn-outline" style="display: none;">Cerrar sesión</a>
+          </li>
+
+          <li><a href="create-store.html" class="nav-link btn btn-secondary" data-translate-key="navCreateStore">Crear
+              Tienda</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div id="currency-counter" aria-label="Cantidad de Devcoins disponibles" role="region" style="
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0, 255, 247, 0.1);
+  color: #00fff7;
+  border: 1px solid #00fff7;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 1000;
+  user-select: none;
+">
+    <span style="font-size: 1.3rem;">Ⓡ</span>
+    <span id="currency-amount"></span>
+  </div>
+
+
+  <!-- Hero -->
+  <section id="inicio" class="hero" role="region" aria-label="Sección de bienvenida">
+    <div class="container hero-container">
+      <article class="hero-text">
+        <h1 data-translate-key="heroTitle">
+          Compra y vende <span class="highlight" data-translate-key="heroHighlight">sistemas para Roblox Studio</span>
+        </h1>
+        <p data-translate-key="heroDescription">
+          Explora scripts, UI/UX, admin panels y más. Muestra tu portfolio y conecta con desarrolladores.
+        </p>
+        <div class="hero-cta">
+          <a href="#tienda" class="btn btn-primary" data-translate-key="btnExploreStore">Explorar Tienda</a>
+          <a href="#portfolio" class="btn btn-outline" data-translate-key="btnViewPortfolios">Ver Portfolios</a>
+        </div>
+      </article>
+      <aside class="hero-image" aria-label="Ilustración de desarrollo Roblox">
+        <img src="hero-illustration.svg" alt="Desarrollo Roblox Studio" />
+      </aside>
+    </div>
+  </section>
+
+  <!-- Marketplace -->
+  <section id="tienda" class="marketplace" role="region" aria-label="Marketplace de sistemas en venta">
+    <div class="container">
+      <header>
+        <h2 data-translate-key="storeSystemsForSale">Sistemas promocionados</h2>
+        <form class="filters" role="search" aria-label="Filtrar y buscar sistemas">
+          <label for="categoria-select" class="visually-hidden" data-translate-key="labelCategory">Categoría</label>
+          <select id="categoria-select" name="categoria" data-translate-key-placeholder="selectCategoryPlaceholder">
+            <option value="" data-translate-key="optionAllCategories">Todas las categorías</option>
+            <option value="scripting" data-translate-key="optionScripting">Scripting</option>
+            <option value="uiux" data-translate-key="optionUIUX">UI/UX</option>
+            <option value="admin" data-translate-key="optionAdminPanels">Admin Panels</option>
+          </select>
+          <label for="search-sistema" class="visually-hidden" data-translate-key="labelSearchSystem">Buscar
+            sistema</label>
+          <input type="search" id="search-sistema" name="search" placeholder="Buscar sistema..."
+            data-translate-key-placeholder="placeholderSearchSystem" />
+        </form>
+      </header>
+      <div id="systems-list" class="product-grid" role="list">
+        <!-- Aquí se inyectarán los sistemas promocionados con JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio" class="portfolio" role="region" aria-label="Portfolios Promocionados de desarrolladores">
+    <div class="container">
+      <header>
+        <h2 data-translate-key="portfolioFeatured">Portfolios Promocionados</h2>
+      </header>
+      <div class="portfolio-grid" id="promoted-portfolios" role="list"></div>
+
+    </div>
+    </div>
+  </section>
+
+  <!-- Modal solo lectura (detalles) -->
+  <div id="modalReadOnly" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalReadOnlyTitle"
+    aria-describedby="modalReadOnlyDesc" tabindex="-1" hidden>
+    <div class="modal-content" tabindex="0">
+      <div class="modal-header">
+        <h2 id="modalReadOnlyTitle">Detalles Portafolio</h2>
+        <button id="modalReadOnlyCloseBtn" class="modal-close" aria-label="Cerrar modal">&times;</button>
+      </div>
+      <div id="modalReadOnlyBody" tabindex="0" aria-live="polite" style="outline:none;">
+        <!-- Detalles aquí -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-container">
+      <p data-translate-key="footerCopyright">&copy; 2025 RandomDevs. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    async function getDevCoins() {
+      try {
+        const res = await fetch('/api/global-coins');
+        const data = await res.json();
+        return data.coins || 0;
+      } catch (err) {
+        console.error('Error al obtener DevCoins:', err);
+        return 0;
+      }
+    }
+
+    async function setDevCoins(amount) {
+      try {
+        const res = await fetch('/api/global-coins/set', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount: Math.max(0, parseInt(amount, 10)) })
+        });
+        if (!res.ok) throw new Error('Error en setDevCoins');
+        updateCurrencyCounter();
+      } catch (err) {
+        console.error('Error al establecer DevCoins:', err);
+      }
+    }
+
+    async function addDevCoins(amount) {
+      const current = await getDevCoins();
+      await setDevCoins(current + parseInt(amount, 10));
+    }
+
+    async function subtractDevCoins(amount) {
+      const current = await getDevCoins();
+      if (amount > current) return false;
+      await setDevCoins(current - parseInt(amount, 10));
+      return true;
+    }
+
+    async function updateCurrencyCounter() {
+      const amountSpan = document.getElementById("currency-amount");
+      if (amountSpan) {
+        const coins = await getDevCoins();
+        amountSpan.textContent = coins;
+      }
+    }
+
+    // --- Traducciones ---
+    const translations = {
+      es: {
+        navHome: "Inicio",
+        navStore: "Tienda",
+        navPortfolio: "Portfolio",
+        navContact: "Contacto",
+        navDiscordLogin: "Iniciar sesión con Discord",
+        navCreateStore: "Crear Tienda",
+        heroTitle: "Compra y vende <span class=\"highlight\">sistemas para Roblox Studio</span>",
+        heroDescription: "Explora scripts, UI/UX, admin panels y más. Muestra tu portfolio y conecta con desarrolladores.",
+        btnExploreStore: "Explorar Tienda",
+        btnViewPortfolios: "Ver Portfolios",
+        storeSystemsForSale: "Sistemas promocionados",
+        labelCategory: "Categoría",
+        selectCategoryPlaceholder: "Selecciona una categoría",
+        optionAllCategories: "Todas las categorías",
+        optionScripting: "Scripting",
+        optionUIUX: "UI/UX",
+        optionAdminPanels: "Admin Panels",
+        labelSearchSystem: "Buscar sistema",
+        placeholderSearchSystem: "Buscar sistema...",
+        portfolioFeatured: "Portfolios Destacados",
+        portfolioSpecialist: "Especialista en scripting y monetización.",
+        portfolioExpert: "Experto en UI/UX con diseños modernos.",
+        btnContact: "Contactar",
+        btnBuy: "Comprar",
+        promotedWith: "Promocionado con",
+        noProducts: "No hay productos promocionados disponibles.",
+        footerCopyright: "© 2025 RandomDevs. Todos los derechos reservados."
+      },
+      en: {
+        navHome: "Home",
+        navStore: "Store",
+        navPortfolio: "Portfolio",
+        navContact: "Contact",
+        navDiscordLogin: "Sign in with Discord",
+        navCreateStore: "Create Store",
+        heroTitle: "Buy and sell <span class=\"highlight\">systems for Roblox Studio</span>",
+        heroDescription: "Explore scripts, UI/UX, admin panels and more. Showcase your portfolio and connect with developers.",
+        btnExploreStore: "Explore Store",
+        btnViewPortfolios: "View Portfolios",
+        storeSystemsForSale: "Featured Systems",
+        labelCategory: "Category",
+        selectCategoryPlaceholder: "Select a category",
+        optionAllCategories: "All categories",
+        optionScripting: "Scripting",
+        optionUIUX: "UI/UX",
+        optionAdminPanels: "Admin Panels",
+        labelSearchSystem: "Search system",
+        placeholderSearchSystem: "Search system...",
+        portfolioFeatured: "Featured Portfolios",
+        portfolioSpecialist: "Specialist in scripting and monetization.",
+        portfolioExpert: "Expert in UI/UX with modern designs.",
+        btnContact: "Contact",
+        btnBuy: "Buy",
+        promotedWith: "Promoted with",
+        noProducts: "No promoted products available.",
+        footerCopyright: "© 2025 RandomDevs. All rights reserved."
+      }
+    };
+
+    // --- Función para traducir la página completa ---
+    function translatePage(lang) {
+      // Traduce todos los elementos con data-translate-key
+      document.querySelectorAll('[data-translate-key]').forEach(el => {
+        const key = el.getAttribute('data-translate-key');
+        if (translations[lang] && translations[lang][key]) {
+          const htmlTags = ['h1', 'h2', 'p', 'a', 'option', 'label', 'span', 'button', 'div'];
+          if (htmlTags.includes(el.tagName.toLowerCase())) {
+            el.innerHTML = translations[lang][key];
+          } else {
+            el.textContent = translations[lang][key];
+          }
+        }
+      });
+
+      // Traduce placeholders
+      document.querySelectorAll('[data-translate-key-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-translate-key-placeholder');
+        if (translations[lang] && translations[lang][key]) {
+          el.setAttribute('placeholder', translations[lang][key]);
+        }
+      });
+
+      // Actualizar texto botón de idioma
+      if (langToggleBtn) {
+        langToggleBtn.textContent = lang.toUpperCase();
+        langToggleBtn.setAttribute('aria-pressed', lang === 'en' ? 'true' : 'false');
+      }
+
+      // Renderizar sistemas promocionados activos
+      renderPromotedSystems(lang);
+    }
+
+    // --- Renderizar sistemas promocionados activos (fusionando lógica) ---
+    function renderPromotedSystems(lang) {
+      const container = document.getElementById('systems-list');
+      if (!container) return;
+
+      const products = JSON.parse(localStorage.getItem('products') || '[]');
+      let promotions = JSON.parse(localStorage.getItem('promotions') || '[]');
+
+      // Filtrar promociones activas (no expiradas)
+      const now = new Date();
+      promotions = promotions.filter(promo => new Date(promo.expiresAt) > now);
+
+      if (!Array.isArray(products) || products.length === 0 || promotions.length === 0) {
+        container.innerHTML = `<p>${translations[lang].noProducts}</p>`;
+        return;
+      }
+
+      container.innerHTML = '';
+
+      promotions.forEach(promo => {
+        // Encontrar el producto asociado a la promoción
+        const producto = products.find(p => (p.id || products.indexOf(p).toString()) === promo.systemId);
+
+        if (!producto) return; // Saltar si no se encuentra producto
+
+        const card = document.createElement('article');
+        card.className = 'product-card system-card';
+        card.setAttribute('role', 'listitem');
+        card.setAttribute('tabindex', '0');
+
+        card.innerHTML = `
+      <h3>${producto.name}</h3>
+      <p>${producto.description || (lang === 'es' ? 'Sin descripción.' : 'No description.')}</p>
+      <div><b>${lang === 'es' ? 'Promoción activa' : 'Active promotion'}</b> - Pagado: ${promo.amount} Ⓡ | Expira: ${new Date(promo.expiresAt).toLocaleString()}</div>
+      <button class="btn btn-primary buy-btn">${translations[lang].btnBuy}</button>
+    `;
+
+        // Evento comprar sistema con coste = promo.amount
+        card.querySelector('button.buy-btn').addEventListener('click', () => {
+          if (subtractDevCoins(promo.amount)) {
+            alert(lang === 'es'
+              ? `Has comprado el sistema "${producto.name}" por ${promo.amount} DevCoins.`
+              : `You bought the system "${producto.name}" for ${promo.amount} DevCoins.`);
+            updateCurrencyCounter();
+          } else {
+            alert(lang === 'es' ? 'No tienes suficientes DevCoins.' : 'You do not have enough DevCoins.');
+          }
+        });
+
+        container.appendChild(card);
+      });
+    }
+
+    // --- Manejo de botón cambio idioma ---
+    const langToggleBtn = document.getElementById('lang-toggle');
+    const langKeys = Object.keys(translations);
+    let currentLangIndex = 0;
+
+    // Evento para alternar idioma
+    if (langToggleBtn) {
+      langToggleBtn.addEventListener('click', () => {
+        currentLangIndex = (currentLangIndex + 1) % langKeys.length;
+        translatePage(langKeys[currentLangIndex]);
+      });
+    }
+
+    // --- Discord login/logout ---
+    const discordLoginBtn = document.getElementById("discord-login-btn");
+    if (discordLoginBtn) {
+      discordLoginBtn.addEventListener("click", () => {
+        discordLoginBtn.textContent = "Redirigiendo...";
+        discordLoginBtn.disabled = true;
+        localStorage.setItem('discord-login-clicked', 'true');
+      });
+    }
+
+    const discordCode = new URLSearchParams(window.location.search).get('code');
+    if (discordCode) {
+      localStorage.setItem('discordLoggedIn', 'true');
+      history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    function handleDiscordLoginState() {
+      const isLoggedIn = localStorage.getItem('discordLoggedIn') === 'true';
+      if (isLoggedIn && discordLoginBtn) discordLoginBtn.remove();
+
+      const logoutBtn = document.getElementById("logout-btn");
+      if (logoutBtn) {
+        logoutBtn.style.display = isLoggedIn ? "inline-block" : "none";
+        logoutBtn.addEventListener('click', () => {
+          localStorage.removeItem('discordLoggedIn');
+          location.reload();
+        });
+      }
+    }
+
+    // Al cargar la página
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCurrencyCounter();
+
+      const lang = langKeys[currentLangIndex]; // idioma actual
+
+      translatePage(lang);
+      updateCurrencyCounter();
+      handleDiscordLoginState();
+    });
+
+    function openReadOnlyModal(p) {
+      const modalReadOnly = document.getElementById('modalReadOnly');
+      const modalBody = document.getElementById('modalReadOnlyBody');
+      modalReadOnly.hidden = false;
+      modalReadOnly.classList.add('active');
+
+      // Función para escapar texto y evitar XSS
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      const mediaHtml = (p.media || []).length > 0
+        ? p.media.map(url => {
+          const isVideo = url.startsWith('data:video') || url.endsWith('.mp4') || url.endsWith('.webm') || url.startsWith('blob:');
+          if (isVideo) {
+            return `<video src="${url}" controls style="max-width:300px; max-height:200px;"></video>`;
+          } else {
+            return `<img src="${url}" style="max-width:300px; max-height:200px;" alt="Media image">`;
+          }
+        }).join('')
+        : '<p>No hay media disponible.</p>';
+
+      modalBody.innerHTML = `
+    <h3>${escapeHtml(p.name)}</h3>
+    <p><strong>Descripción:</strong> ${escapeHtml(p.description)}</p>
+    <p><strong>Rol:</strong> ${escapeHtml(p.role)}</p>
+    <p><strong>Lenguaje:</strong> ${escapeHtml(p.language)}</p>
+    <p><strong>GitHub:</strong> <a href="${escapeHtml(p.github)}" target="_blank" rel="noopener noreferrer">${escapeHtml(p.github)}</a></p>
+    <div class="media-container">${mediaHtml}</div>
+  `;
+
+      // Foco para accesibilidad
+      modalReadOnly.focus();
+    }
+
+
+    // Simulación de portfolios (en la vida real vendrían de base de datos)
+    const allPortfolios = [
+      {
+        id: 1,
+        name: "RobloxDev123",
+        description: "Especialista en scripting y monetización.",
+        role: "Scripter",
+        language: "Lua",
+        github: "https://github.com/RobloxDev123",
+        avatar: "RD",
+        media: []
+      },
+      {
+        id: 2,
+        name: "UI_DesignerPro",
+        description: "Experto en UI/UX con diseños modernos.",
+        role: "UI/UX Designer",
+        language: "N/A",
+        github: "https://github.com/UIDesignerPro",
+        avatar: "UX",
+        media: []
+      },
+      {
+        id: 3,
+        name: "ScriptMaster",
+        description: "Admin panels y scripts avanzados.",
+        role: "Backend Scripter",
+        language: "Lua",
+        github: "https://github.com/ScriptMaster",
+        avatar: "SM",
+        media: []
+      }
+    ];
+
+    // Promociones cargadas correctamente desde localStorage
+    let promotions = JSON.parse(localStorage.getItem('promotedPortfolios') || '[]');
+
+    // Guardar promociones válidas
+    function savePromotions() {
+      localStorage.setItem('promotedPortfolios', JSON.stringify(promotions));
+    }
+
+    function closeReadOnlyModal() {
+      modalReadOnly.hidden = true;
+      modalReadOnly.classList.remove('active');
+    }
+
+    modalReadOnlyCloseBtn.addEventListener('click', () => closeReadOnlyModal());
+
+    // Referencia al contenedor de portfolios promocionados
+    const promotedContainer = document.getElementById('promoted-portfolios');
+
+    // Portafolios generales (usualmente ya cargados en tu app)
+    let portfolios = JSON.parse(localStorage.getItem('portfolios') || '[]');
+
+    // Función corregida para mostrar portafolios promocionados
+    function renderPromotedPortfolios() {
+      promotedContainer.innerHTML = '';
+
+      const now = Date.now();
+      promotions = promotions.filter(pr => pr.expiresAt > now);
+      savePromotions();
+
+      const promoted = promotions.map(pr => portfolios.find(p => p.id === pr.portfolioId)).filter(Boolean);
+
+      if (promoted.length === 0) {
+        promotedContainer.innerHTML = '<p style="color:#00fff7;">No hay portfolios promocionados.</p>';
+        return;
+      }
+
+      promoted.forEach(portfolio => {
+        const article = document.createElement('article');
+        article.className = 'portfolio-card';
+        article.setAttribute('role', 'listitem');
+        article.tabIndex = 0;
+
+        let html = '';
+
+        if (portfolio.avatar) {
+          html += `<div class="avatar" aria-hidden="true">${portfolio.avatar}</div>`;
+        }
+        if (portfolio.name) {
+          html += `<h3>${portfolio.name}</h3>`;
+        }
+        if (portfolio.description) {
+          html += `<p>${portfolio.description}</p>`;
+        }
+        if (portfolio.role) {
+          html += `<p><strong>Rol:</strong> ${portfolio.role}</p>`;
+        }
+        if (portfolio.language) {
+          html += `<p><strong>Lenguaje:</strong> ${portfolio.language}</p>`;
+        }
+        if (portfolio.github) {
+          html += `<p><strong>GitHub:</strong> <a href="${portfolio.github}" target="_blank" rel="noopener noreferrer">${portfolio.github}</a></p>`;
+        }
+
+        article.innerHTML = html;
+
+        article.addEventListener('click', () => {
+          openReadOnlyModal(portfolio);
+        });
+
+        article.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openReadOnlyModal(portfolio);
+          }
+        });
+
+        promotedContainer.appendChild(article);
+      });
+    }
+
+    // Llamar esta función después de cargar portfolios y promociones
+    renderPromotedPortfolios();
+  </script>
+
+</body>
+
+</html>
