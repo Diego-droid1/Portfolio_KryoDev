@@ -12,6 +12,7 @@
       --header-bg: #1f1f1f;
       --footer-bg: #1f1f1f;
     }
+
     body.light-mode {
       --bg-color: #f5f5f5;
       --text-color: #111;
@@ -19,8 +20,17 @@
       --header-bg: #e0f7fa;
       --footer-bg: #e0f7fa;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: var(--bg-color);
@@ -31,6 +41,7 @@
       flex-direction: column;
       transition: background 0.3s, color 0.3s;
     }
+
     header {
       background-color: var(--header-bg);
       padding: 1.2rem 2rem;
@@ -41,11 +52,13 @@
       flex-wrap: wrap;
       gap: 1rem;
     }
+
     header h1 {
       font-weight: 700;
       font-size: 2rem;
       color: #00bcd4;
     }
+
     nav ul {
       list-style: none;
       display: flex;
@@ -53,18 +66,27 @@
       flex-wrap: wrap;
       align-items: center;
     }
-    nav ul li { font-weight: 600; }
+
+    nav ul li {
+      font-weight: 600;
+    }
+
     a {
       color: #00bcd4;
       text-decoration: none;
       transition: color 0.3s ease;
     }
-    a:hover, a:focus { color: #00e0ff; }
+
+    a:hover, a:focus {
+      color: #00e0ff;
+    }
+
     .toggles {
       display: flex;
       gap: 1rem;
       align-items: center;
     }
+
     button.toggle-btn {
       padding: 0.5rem 0.8rem;
       border-radius: 6px;
@@ -75,23 +97,27 @@
       color: #121212;
       transition: background 0.3s;
     }
+
     main {
       max-width: 1200px;
       margin: 2rem auto;
       padding: 0 1rem;
       flex-grow: 1;
     }
+
     h2 {
       font-size: 2rem;
       border-bottom: 3px solid #00bcd4;
       display: inline-block;
       margin-bottom: 2rem;
     }
+
     .store-items {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
     }
+
     .item-card {
       background-color: var(--card-bg);
       border-radius: 12px;
@@ -101,20 +127,24 @@
       flex-direction: column;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
     .item-card h3 {
       color: #00e0ff;
       margin-bottom: 0.75rem;
     }
+
     .item-card p {
       flex-grow: 1;
       margin-bottom: 1rem;
     }
+
     .price {
       font-weight: 700;
       font-size: 1.2rem;
       color: #4caf50;
       margin-bottom: 1rem;
     }
+
     .buy-btn {
       background: linear-gradient(135deg, #00bcd4, #00e0ff);
       color: #121212;
@@ -125,6 +155,7 @@
       font-weight: 700;
       transition: all 0.3s ease;
     }
+
     .video-container {
       position: relative;
       width: 100%;
@@ -133,12 +164,14 @@
       border-radius: 12px;
       overflow: hidden;
     }
+
     .video-container iframe {
       position: absolute;
       width: 100%;
       height: 100%;
       border: none;
     }
+
     #cart {
       background-color: var(--card-bg);
       padding: 1.5rem;
@@ -146,21 +179,25 @@
       margin-top: 3rem;
       display: none;
     }
+
     #cart h3 {
       color: #00bcd4;
       margin-bottom: 1rem;
     }
+
     #cart ul {
       list-style: none;
       max-height: 250px;
       overflow-y: auto;
       margin-bottom: 1rem;
     }
+
     #cart ul li {
       display: flex;
       justify-content: space-between;
       padding: 0.5rem 0;
     }
+
     #cart ul li button {
       background: #e53935;
       color: #fff;
@@ -168,24 +205,12 @@
       border-radius: 6px;
       padding: 0.4rem 0.6rem;
     }
+
     #cart-total {
       font-weight: bold;
       color: #4caf50;
     }
-    #download-container {
-      margin-top: 1rem;
-      display: none;
-      text-align: center;
-    }
-    #download-container a {
-      background: linear-gradient(135deg, #00bcd4, #00e0ff);
-      color: #121212;
-      padding: 0.75rem 1rem;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 700;
-      display: inline-block;
-    }
+
     footer {
       background-color: var(--footer-bg);
       text-align: center;
@@ -193,6 +218,7 @@
       font-size: 0.9rem;
       margin-top: 4rem;
     }
+
     /* MODAL Contact Form */
     .modal {
       position: fixed;
@@ -206,7 +232,11 @@
       align-items: center;
       z-index: 9999;
     }
-    .modal.show { display: flex; }
+
+    .modal.show {
+      display: flex;
+    }
+
     .modal-content {
       background-color: var(--card-bg);
       padding: 2rem;
@@ -217,7 +247,12 @@
       color: var(--text-color);
       position: relative;
     }
-    .modal-content h2 { color: #00bcd4; margin-bottom: 1rem; }
+
+    .modal-content h2 {
+      color: #00bcd4;
+      margin-bottom: 1rem;
+    }
+
     .modal-close {
       position: absolute;
       top: 1rem;
@@ -228,11 +263,13 @@
       color: var(--text-color);
       cursor: pointer;
     }
+
     #contact-form label {
       display: block;
       margin-bottom: 0.3rem;
       font-weight: 600;
     }
+
     #contact-form input,
     #contact-form textarea {
       width: 100%;
@@ -243,15 +280,18 @@
       background-color: var(--bg-color);
       color: var(--text-color);
     }
+
     #contact-form textarea {
       resize: vertical;
       min-height: 100px;
     }
+
     #contact-form input:focus,
     #contact-form textarea:focus {
       border-color: #00e0ff;
       outline: none;
     }
+
     .submit-btn {
       background: linear-gradient(135deg, #00bcd4, #00e0ff);
       color: #121212;
@@ -262,9 +302,17 @@
       font-weight: 700;
       width: 100%;
     }
+
+    /* Responsive */
     @media (max-width: 768px) {
-      nav ul { flex-direction: column; }
-      header { flex-direction: column; gap: 0.5rem; }
+      nav ul {
+        flex-direction: column;
+      }
+
+      header {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
     }
   </style>
 </head>
@@ -293,9 +341,6 @@
       <ul id="cart-items"></ul>
       <div id="cart-total"></div>
       <div id="paypal-button-container"></div>
-      <div id="download-container">
-        <a id="download-link" target="_blank">⬇️ Download File</a>
-      </div>
     </section>
   </main>
 
@@ -304,11 +349,11 @@
   </footer>
 
   <!-- Modal Contact Form -->
-  <div id="contact-modal" class="modal" aria-hidden="true" role="dialog">
+  <div id="contact-modal" class="modal" aria-hidden="true">
     <div class="modal-content">
-      <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+      <button class="modal-close" id="modal-close">&times;</button>
       <h2>Contact Us</h2>
-      <form id="contact-form" action="https://formsubmit.co/throughpass689@gmail.com" method="POST">
+      <form id="contact-form" action="https://formsubmit.co/TU_CORREO_AQUI" method="POST">
         <input type="hidden" name="_captcha" value="false">
         <label for="name">Name</label>
         <input type="text" name="name" required placeholder="Your full name">
@@ -346,6 +391,7 @@
 
     let carrito = [];
     let currentLang = 'en';
+
     const i18n = {
       es: {
         title: "Tienda KryoDev - Venta de Sistemas",
@@ -391,13 +437,17 @@
         const card = document.createElement('article');
         card.className = 'item-card';
         card.innerHTML = `
-          <div class="video-container"><iframe src="${item.video}" allowfullscreen></iframe></div>
+          <div class="video-container">
+            <iframe src="${item.video}" allowfullscreen></iframe>
+          </div>
           <h3>${item.nombre[currentLang]}</h3>
           <p>${item.descripcion[currentLang]}</p>
           <div class="price">$${item.precio.toFixed(2)}</div>
-          <button class="buy-btn" data-id="${item.id}">Add to Cart</button>`;
+          <button class="buy-btn" data-id="${item.id}">Add to Cart</button>
+        `;
         storeItems.appendChild(card);
       });
+
       document.querySelectorAll('.buy-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const id = +btn.getAttribute('data-id');
@@ -413,106 +463,96 @@
       const cartItems = $('#cart-items');
       const cartTotal = $('#cart-total');
       const paypalContainer = $('#paypal-button-container');
-      const downloadContainer = $('#download-container');
-      if (!carrito.length) {
+
+      if (carrito.length === 0) {
         cartSection.style.display = 'none';
         paypalContainer.innerHTML = '';
-        downloadContainer.style.display = 'none';
         return;
       }
+
       cartSection.style.display = 'block';
       cartItems.innerHTML = '';
       let total = 0;
+
       carrito.forEach((item, i) => {
         total += item.precio;
         const li = document.createElement('li');
         li.innerHTML = `
           ${item.nombre[currentLang]} – $${item.precio.toFixed(2)}
-          <button onclick="removeItem(${i})">${i18n[currentLang].delete}</button>`;
+          <button onclick="removeItem(${i})">${i18n[currentLang].delete}</button>
+        `;
         cartItems.appendChild(li);
       });
+
       cartTotal.textContent = `${i18n[currentLang].total}: $${total.toFixed(2)} USD`;
       renderPaypalButton(total.toFixed(2));
     }
 
-    window.removeItem = i => { carrito.splice(i,1); renderCart(); };
+    window.removeItem = i => {
+      carrito.splice(i, 1);
+      renderCart();
+    };
 
     function renderPaypalButton(total) {
       const paypalContainer = $('#paypal-button-container');
-      const downloadContainer = $('#download-container');
-            paypalContainer.innerHTML = '';
+      paypalContainer.innerHTML = '';
       paypal.Buttons({
-        style: {
-          layout: 'vertical',
-          color: 'blue',
-          shape: 'rect',
-          label: 'paypal'
-        },
-        createOrder: function (data, actions) {
-          return actions.order.create({
-            purchase_units: [{
-              amount: { value: total }
-            }]
-          });
-        },
-        onApprove: function (data, actions) {
-          return actions.order.capture().then(function (details) {
-            alert(`${i18n[currentLang].thanks}, ${details.payer.name.given_name}!`);
-            const archivo = carrito[0].archivoDescarga;
-            const downloadLink = document.getElementById('download-link');
-            downloadLink.href = archivo;
-            document.getElementById('download-container').style.display = 'block';
-            carrito = [];
-            renderCart();
-          });
-        },
-        onCancel: function () {
-          alert("Pago cancelado.");
-        },
-        onError: function (err) {
+        createOrder: (data, actions) => actions.order.create({
+          purchase_units: [{ amount: { value: total } }]
+        }),
+        onApprove: (data, actions) => actions.order.capture().then(details => {
+          alert(`${i18n[currentLang].thanks}, ${details.payer.name.given_name}!`);
+          carrito = [];
+          renderCart();
+        }),
+        onError: err => {
           console.error(err);
-          alert("Ocurrió un error durante el pago.");
+          alert('Error in payment.');
         }
       }).render('#paypal-button-container');
     }
 
-    // Contact modal open/close
-    const contactLink = document.getElementById('contact-link');
-    const modal = document.getElementById('contact-modal');
-    const closeModal = document.getElementById('modal-close');
+    $('#lang-toggle').addEventListener('click', () => {
+      currentLang = currentLang === 'en' ? 'es' : 'en';
+      $('#lang-toggle').textContent = currentLang === 'en' ? '🌐 EN' : '🌐 ES';
+      updateTexts();
+      renderProductos();
+      renderCart();
+    });
+
+    $('#theme-toggle').addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      const isLight = document.body.classList.contains('light-mode');
+      $('#theme-toggle').textContent = isLight ? '☀️' : '🌙';
+    });
+
+    // Contact modal logic
+    const contactLink = $('#contact-link');
+    const modal = $('#contact-modal');
+    const closeModal = $('#modal-close');
+
     contactLink.addEventListener('click', e => {
       e.preventDefault();
       modal.classList.add('show');
       modal.setAttribute('aria-hidden', 'false');
     });
+
     closeModal.addEventListener('click', () => {
       modal.classList.remove('show');
       modal.setAttribute('aria-hidden', 'true');
     });
-    window.addEventListener('click', e => {
+
+    modal.addEventListener('click', e => {
       if (e.target === modal) {
         modal.classList.remove('show');
         modal.setAttribute('aria-hidden', 'true');
       }
     });
 
-    // Theme toggle
-    document.getElementById('theme-toggle').addEventListener('click', () => {
-      document.body.classList.toggle('light-mode');
-    });
-
-    // Language toggle
-    document.getElementById('lang-toggle').addEventListener('click', () => {
-      currentLang = currentLang === 'en' ? 'es' : 'en';
-      document.getElementById('lang-toggle').textContent = currentLang === 'en' ? '🌐 EN' : '🌐 ES';
-      updateTexts();
-      renderProductos();
-      renderCart();
-    });
-
     // Init
     updateTexts();
     renderProductos();
+    renderCart();
   </script>
 </body>
 </html>
