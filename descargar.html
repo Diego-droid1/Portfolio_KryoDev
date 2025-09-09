@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Download</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 2rem;
+      text-align: center;
+    }
+    .message {
+      max-width: 500px;
+    }
+  </style>
+</head>
+<body>
+  <div class="message" id="message">Checking your purchase...</div>
+
+  <script>
+    const isValid = localStorage.getItem('compraValida');
+    const archivo = localStorage.getItem('archivoDescarga');
+
+    const message = document.getElementById('message');
+
+    if (isValid === 'true' && archivo) {
+      message.textContent = 'Thank you for your purchase. Starting download...';
+
+      const link = document.createElement('a');
+      link.href = `./descargas/${encodeURIComponent(archivo)}`;
+      link.download = archivo;
+      document.body.appendChild(link);
+      link.click();
+
+      // Evitar reutilización
+      localStorage.removeItem('compraValida');
+      localStorage.removeItem('archivoDescarga');
+    } else {
+      message.textContent = 'You do not have permission to download this file directly.';
+    }
+  </script>
+</body>
+</html>
