@@ -493,36 +493,33 @@
       renderCart();
     };
 
-    function descargarArchivo(nombreArchivo) {
-    const link = document.createElement('a');
-link.href = `https://diego-droid1.github.io/Portfolio_KryoDev/descargas/${encodeURIComponent(nombreArchivo)}`;
-    link.download = nombreArchivo;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-
     function renderPaypalButton(total) {
-      const paypalContainer = $('#paypal-button-container');
-      paypalContainer.innerHTML = '';
-      paypal.Buttons({
-        createOrder: (data, actions) => actions.order.create({
-          purchase_units: [{ amount: { value: total } }]
-        }),
-        onApprove: (data, actions) => actions.order.capture().then(details => {
-          alert(`${i18n[currentLang].thanks}, ${details.payer.name.given_name}!`);
-                  carrito.forEach(item => {
-          descargarArchivo(item.archivoDescarga);
-        });
-          carrito = [];
-          renderCart();
-        }),
-        onError: err => {
-          console.error(err);
-          alert('Error in payment.');
-        }
-      }).render('#paypal-button-container');
+  const paypalContainer = $('#paypal-button-container');
+  paypalContainer.innerHTML = '';
+  paypal.Buttons({
+    createOrder: (data, actions) => actions.order.create({
+      purchase_units: [{ amount: { value: total } }]
+    }),
+    onApprove: (data, actions) => actions.order.capture().then(details => {
+      alert(`${i18n[currentLang].thanks}, ${details.payer.name.given_name}!`);
+
+      if (carrito.length > 0) {
+        const producto = carrito[0];
+        localStorage.setItem('compraValida', 'true');
+        localStorage.setItem('archivoDescarga', producto.archivoDescarga);
+      }
+
+      carrito = [];
+      renderCart();
+
+      window.location.href = './descargar.html';
+    }),
+    onError: err => {
+      console.error(err);
+      alert('Error in payment.');
     }
+  }).render('#paypal-button-container');
+}
 
     $('#lang-toggle').addEventListener('click', () => {
       currentLang = currentLang === 'en' ? 'es' : 'en';
