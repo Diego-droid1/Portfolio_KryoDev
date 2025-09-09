@@ -2,349 +2,621 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tienda KryoDev - Venta de Sistemas</title>
-  <style>
-    /* Reset y estilos generales (igual que antes) */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #121212;
-      color: #e0e0e0;
-      line-height: 1.6;
-      overflow-x: hidden;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-    @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0px); } }
-    a { color: #00bcd4; text-decoration: none; transition: color 0.3s ease; }
-    a:hover, a:focus { text-decoration: underline; color: #00e0ff; outline: none; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title data-i18n="title">KryoDev Store - Systems for Sale</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #222;
+            --header-bg: #1f1f1f;
+            --footer-bg: #1f1f1f;
+        }
 
-    header {
-      background-color: #1f1f1f;
-      padding: 20px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 2px solid #00bcd4;
-      animation: fadeIn 1s ease-out;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    header h1 {
-      font-weight: 700;
-      font-size: 2rem;
-      letter-spacing: 2px;
-      color: #00bcd4;
-      animation: pulse 2.5s infinite;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 30px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    nav ul li { font-weight: 600; }
-    main {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 0 20px;
-      flex-grow: 1;
-      animation: fadeIn 1s ease;
-    }
-    h2 {
-      font-size: 2rem;
-      border-bottom: 3px solid #00bcd4;
-      display: inline-block;
-      margin-bottom: 30px;
-      animation: fadeIn 1s ease;
-    }
-    .store-items {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
-    }
-    .item-card {
-      background-color: #222;
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0, 188, 212, 0.2);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      animation: fadeIn 0.6s ease forwards;
-      transform: scale(1);
-      position: relative;
-      overflow: hidden;
-    }
-    .item-card:hover, .item-card:focus-within {
-      transform: scale(1.04) rotateX(1deg);
-      box-shadow: 0 16px 30px rgba(0, 188, 212, 0.7);
-      outline: none;
-      border: 1.5px solid #00e0ff;
-      background: linear-gradient(145deg, #1b1b1b, #282828);
-    }
-    .item-card h3 { color: #00e0ff; margin-bottom: 12px; }
-    .item-card p {
-      color: #bbb;
-      flex-grow: 1;
-      margin-bottom: 15px;
-      text-shadow: 0 0 3px #00bcd4;
-    }
-    .price {
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: #4caf50;
-      margin-bottom: 15px;
-      text-shadow: 0 0 8px #4caf50, 0 0 20px #81c784;
-    }
-    .buy-btn {
-      background: linear-gradient(135deg, #00bcd4, #00e0ff);
-      color: #121212;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px #00bcd4, 0 0 10px #00e0ff inset;
-      user-select: none;
-    }
-    .buy-btn:hover, .buy-btn:focus {
-      background: linear-gradient(135deg, #00e0ff, #00bcd4);
-      transform: scale(1.08);
-      box-shadow: 0 6px 20px #00e0ff, 0 0 20px #00bcd4 inset;
-      outline: none;
-    }
+        body.light-mode {
+            --bg-color: #f5f5f5;
+            --text-color: #111;
+            --card-bg: #fff;
+            --header-bg: #e0f7fa;
+            --footer-bg: #e0f7fa;
+        }
 
-    /* Contenedor del video */
-    .video-container {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%;
-      height: 0;
-      margin-bottom: 20px;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 10px rgba(0, 188, 212, 0.25), 0 4px 12px rgba(0, 188, 212, 0.15);
-      border: 1.5px solid rgba(0, 188, 212, 0.4);
-      background: linear-gradient(135deg, #0b273e 0%, #143a57 100%);
-      transition: box-shadow 0.3s ease;
-    }
-    .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-      border-radius: 12px;
-      filter: drop-shadow(0 0 5px rgba(0, 188, 212, 0.3));
-      transition: filter 0.3s ease;
-    }
-    .video-container iframe:hover, .video-container iframe:focus {
-      filter: drop-shadow(0 0 9px rgba(0, 188, 212, 0.5));
-      outline: none;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    /* Carrito */
-    #cart {
-      background-color: #222;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 6px 12px rgba(0, 188, 212, 0.2);
-      margin-top: 50px;
-      animation: fadeIn 0.8s ease;
-      display: none;
-    }
-    #cart h3 { color: #00bcd4; margin-bottom: 15px; }
-    #cart ul {
-      list-style: none;
-      margin-bottom: 15px;
-      max-height: 250px;
-      overflow-y: auto;
-      padding-right: 10px;
-    }
-    #cart ul li {
-      padding: 8px 10px;
-      border-bottom: 1px solid #333;
-      color: #ccc;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    #cart ul li:last-child { border-bottom: none; }
-    #cart ul li button {
-      background-color: #e53935;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      padding: 4px 8px;
-      font-size: 0.9rem;
-      transition: background-color 0.3s ease;
-    }
-    #cart ul li button:hover, #cart ul li button:focus {
-      background-color: #b71c1c;
-      outline: none;
-    }
-    #cart-total {
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: #4caf50;
-      margin-bottom: 20px;
-    }
-    #paypal-button-container { margin-top: 10px; }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    /* Footer */
-    footer {
-      background-color: #1f1f1f;
-      text-align: center;
-      padding: 15px 10px;
-      color: #666;
-      font-size: 0.9rem;
-      border-top: 2px solid #00bcd4;
-      margin-top: 60px;
-      animation: fadeIn 1s ease-in;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.3s, color 0.3s;
+        }
 
-    /* Responsive */
-    @media (max-width: 600px) {
-      header { flex-direction: column; gap: 15px; }
-      nav ul { flex-direction: column; gap: 15px; align-items: center; }
-    }
-  </style>
+        header {
+            background-color: var(--header-bg);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #00bcd4;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        header h1 {
+            font-weight: 700;
+            font-size: 2rem;
+            color: #00bcd4;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        nav ul li {
+            font-weight: 600;
+        }
+
+        a {
+            color: #00bcd4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover,
+        a:focus {
+            color: #00e0ff;
+        }
+
+        .toggles {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        button.toggle-btn {
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #00bcd4;
+            color: #121212;
+            transition: background 0.3s;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex-grow: 1;
+        }
+
+        h2 {
+            font-size: 2rem;
+            border-bottom: 3px solid #00bcd4;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .store-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .item-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.2rem;
+            box-shadow: 0 10px 20px rgba(0, 188, 212, 0.2);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .item-card h3 {
+            color: #00e0ff;
+            margin-bottom: 0.75rem;
+        }
+
+        .item-card p {
+            flex-grow: 1;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #4caf50;
+            margin-bottom: 1rem;
+        }
+
+        .buy-btn {
+            background: linear-gradient(135deg, #00bcd4, #00e0ff);
+            color: #121212;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        #cart {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 3rem;
+            display: none;
+        }
+
+        #cart h3 {
+            color: #00bcd4;
+            margin-bottom: 1rem;
+        }
+
+        #cart ul {
+            list-style: none;
+            max-height: 250px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+
+        #cart ul li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+        }
+
+        #cart ul li button {
+            background: #e53935;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 0.4rem 0.6rem;
+        }
+
+        #cart-total {
+            font-weight: bold;
+            color: #4caf50;
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Modal overlay */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(18, 18, 18, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Mostrar modal */
+        .modal.show {
+            display: flex;
+        }
+
+        /* Modal contenido */
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 2rem 2.5rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 480px;
+            box-shadow: 0 15px 30px rgba(0, 188, 212, 0.4);
+            color: var(--text-color);
+            position: relative;
+        }
+
+        /* Título modal */
+        .modal-content h2 {
+            margin-bottom: 1.5rem;
+            color: #00bcd4;
+        }
+
+        /* Botón cerrar */
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            font-size: 1.8rem;
+            color: var(--text-color);
+            cursor: pointer;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        /* Formulario */
+        #contact-form label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+
+        #contact-form input,
+        #contact-form textarea {
+            width: 100%;
+            padding: 0.5rem 0.7rem;
+            margin-bottom: 1.2rem;
+            border: 2px solid #00bcd4;
+            border-radius: 8px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+            resize: vertical;
+        }
+
+        #contact-form input:focus,
+        #contact-form textarea:focus {
+            outline: none;
+            border-color: #00e0ff;
+        }
+
+        #contact-form textarea {
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #00bcd4, #00e0ff);
+            color: #121212;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: background 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover,
+        .submit-btn:focus {
+            background: linear-gradient(135deg, #00e0ff, #00bcd4);
+            outline: none;
+        }
+
+        /* Ajuste para modo claro */
+        body.light-mode .modal {
+            background-color: rgba(245, 245, 245, 0.95);
+        }
+
+        body.light-mode .modal-content {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        body.light-mode #contact-form input,
+        body.light-mode #contact-form textarea {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            border-color: #00bcd4;
+        }
+
+        body.light-mode #contact-form input:focus,
+        body.light-mode #contact-form textarea:focus {
+            border-color: #00e0ff;
+        }
+    </style>
 </head>
 
 <body>
-  <header>
-    <h1>KryoDev</h1>
-    <nav>
-      <ul>
-        <li><a href="#">Inicio</a></li>
-        <li><a href="#">Productos</a></li>
-        <li><a href="#">Contacto</a></li>
-      </ul>
-    </nav>
-  </header>
+    <header>
+        <h1>KryoDev</h1>
+        <nav>
+            <ul>
+                <li><a href="#" data-i18n="nav_home">Home</a></li>
+                <li><a href="#" data-i18n="nav_products">Products</a></li>
+                <a href="#" id="contact-link" data-i18n="nav_contact">Contact</a>
+            </ul>
+        </nav>
+        <div class="toggles">
+            <button class="toggle-btn" id="lang-toggle">🌐 EN</button>
+            <button class="toggle-btn" id="theme-toggle">🌙</button>
+        </div>
+    </header>
 
-  <main>
-    <h2>Sistemas Disponibles para la Venta</h2>
-    <div class="store-items" id="store-items"></div>
+    <main>
+        <h2 data-i18n="heading_products">Available Systems for Sale</h2>
+        <div class="store-items" id="store-items"></div>
 
-    <section id="cart">
-      <h3>Tu Carrito</h3>
-      <ul id="cart-items"></ul>
-      <div id="cart-total"></div>
-      <div id="paypal-button-container"></div>
-    </section>
-  </main>
+        <section id="cart">
+            <h3 data-i18n="your_cart">Your Cart</h3>
+            <ul id="cart-items"></ul>
+            <div id="cart-total"></div>
+            <div id="paypal-button-container"></div>
+        </section>
+    </main>
 
-  <footer>&copy; 2025 KryoDev - Todos los derechos reservados.</footer>
+    <div id="contact-modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="contact-modal-title"
+        aria-modal="true">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close" aria-label="Close contact form">&times;</button>
+            <h2 id="contact-modal-title">Contact Us</h2>
+            <form id="contact-form" action="https://formsubmit.co/throughpass689@gmail.com" method="POST" novalidate>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required placeholder="Your full name" />
 
-  <script src="https://www.sandbox.paypal.com/sdk/js?client-id=AZZU4ZiCU0mxG_VWhz3wvCP_beg_QmnW2WlbCw39Iqzym9hntMeHyuQ8QaXcuA4BcEMcwsNpr3bYW20o&currency=USD"></script>
-  <script>
-    const sistemas = [
-      {
-        id: 1,
-        nombre: "Roblox Studio Rounds System – Game-Changing Gameplay!",
-        descripcion: "Una herramienta poderosa para controlar dinámicamente las rondas en tu juego Roblox Studio.",
-        precio: 19.99,
-        video: "https://www.youtube.com/embed/dBsTO_snkik",
-        archivoDescarga: "Round System - KD.rbxl"
-      }
-    ];
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone" placeholder="Your phone number" />
 
-    let carrito = [];
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="Your email address" />
 
-    const storeItems = document.getElementById('store-items');
-    const cartSection = document.getElementById('cart');
-    const cartItems = document.getElementById('cart-items');
-    const cartTotal = document.getElementById('cart-total');
-    const paypalContainer = document.getElementById('paypal-button-container');
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required placeholder="Write your message here"></textarea>
 
-    function renderProductos() {
-      storeItems.innerHTML = '';
-      sistemas.forEach(item => {
-        const el = document.createElement('article');
-        el.className = 'item-card';
-        el.innerHTML = `
-          <div class="video-container">
-            <iframe src="${item.video}" title="${item.nombre} demo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <h3>${item.nombre}</h3>
-          <p>${item.descripcion}</p>
-          <div class="price">$${item.precio.toFixed(2)}</div>
-          <button class="buy-btn" data-id="${item.id}">Añadir al carrito</button>
-        `;
-        storeItems.appendChild(el);
-      });
-      document.querySelectorAll('.buy-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const id = +btn.getAttribute('data-id');
-          const prod = sistemas.find(p => p.id === id);
-          carrito.push(prod);
-          renderCart();
-        });
-      });
-    }
+                <button type="submit" class="submit-btn">Send</button>
+            </form>
+        </div>
+    </div>
 
-    function renderCart() {
-      if (carrito.length === 0) {
-        cartSection.style.display = 'none';
-        paypalContainer.innerHTML = '';
-        return;
-      }
-      cartSection.style.display = 'block';
-      cartItems.innerHTML = '';
-      let total = 0;
-      carrito.forEach((item, i) => {
-        total += item.precio;
-        const li = document.createElement('li');
-        li.innerHTML = `${item.nombre} – $${item.precio.toFixed(2)} <button onclick="removeItem(${i})">Eliminar</button>`;
-        cartItems.appendChild(li);
-      });
-      cartTotal.textContent = `Total: $${total.toFixed(2)} USD`;
-      renderPaypalButton(total.toFixed(2));
-    }
+    <footer>
+        &copy; 2025 KryoDev - <span data-i18n="all_rights">All rights reserved.</span>
+    </footer>
 
-    window.removeItem = i => { carrito.splice(i, 1); renderCart(); };
+    <!-- PayPal SDK -->
+    <script
+        src="https://www.sandbox.paypal.com/sdk/js?client-id=AZZU4ZiCU0mxG_VWhz3wvCP_beg_QmnW2WlbCw39Iqzym9hntMeHyuQ8QaXcuA4BcEMcwsNpr3bYW20o&currency=USD"></script>
 
-    function renderPaypalButton(total) {
-      paypalContainer.innerHTML = '';
-      paypal.Buttons({
-        createOrder: (data, actions) => actions.order.create({
-          purchase_units: [{ amount: { value: total }, description: "Compra en KryoDev" }]
-        }),
-        onApprove: (data, actions) => actions.order.capture().then(details => {
-          alert(`Gracias por tu compra, ${details.payer.name.given_name}!`);
-          carrito.forEach(item => {
-            const a = document.createElement('a');
-            a.href = `descargar.php?archivo=${encodeURIComponent(item.archivoDescarga)}`;
-            a.download = item.archivoDescarga;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-          });
-          carrito = [];
-          renderCart();
-        }),
-        onError: err => {
-          console.error(err);
-          alert('Hubo un error en el pago.');
+    <script>
+        const sistemas = [
+            {
+                id: 1,
+                nombre: {
+                    es: "Roblox Studio Rounds System – ¡Jugabilidad innovadora!",
+                    en: "Roblox Studio Rounds System – Game-Changing Gameplay!"
+                },
+                descripcion: {
+                    es: "Una herramienta poderosa para controlar dinámicamente las rondas en tu juego de Roblox Studio.",
+                    en: "A powerful tool to dynamically manage rounds in your Roblox Studio game."
+                },
+                precio: 19.99,
+                video: "https://www.youtube.com/embed/dBsTO_snkik",
+                archivoDescarga: "Round System - KD.rbxl"
+            }
+        ];
+
+        let carrito = [];
+        let currentLang = 'en';
+
+        const i18n = {
+            es: {
+                title: "Tienda KryoDev - Venta de Sistemas",
+                nav_home: "Inicio",
+                nav_products: "Productos",
+                nav_contact: "Contacto",
+                heading_products: "Sistemas Disponibles para la Venta",
+                your_cart: "Tu Carrito",
+                all_rights: "Todos los derechos reservados.",
+                total: "Total",
+                delete: "Eliminar",
+                thanks: "Gracias por tu compra"
+            },
+            en: {
+                title: "KryoDev Store - Systems for Sale",
+                nav_home: "Home",
+                nav_products: "Products",
+                nav_contact: "Contact",
+                heading_products: "Available Systems for Sale",
+                your_cart: "Your Cart",
+                all_rights: "All rights reserved.",
+                total: "Total",
+                delete: "Delete",
+                thanks: "Thank you for your purchase"
+            }
+        };
+
+        const $ = selector => document.querySelector(selector);
+        const $$ = selector => document.querySelectorAll(selector);
+
+        function updateTexts() {
+            $$('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                el.textContent = i18n[currentLang][key];
+            });
+            document.title = i18n[currentLang]['title'];
         }
-      }).render('#paypal-button-container');
-    }
 
-    renderProductos();
-    renderCart();
-  </script>
+        function renderProductos() {
+            const storeItems = $('#store-items');
+            storeItems.innerHTML = '';
+            sistemas.forEach(item => {
+                const card = document.createElement('article');
+                card.className = 'item-card';
+                card.innerHTML = `
+          <div class="video-container">
+            <iframe src="${item.video}" allowfullscreen></iframe>
+          </div>
+          <h3>${item.nombre[currentLang]}</h3>
+          <p>${item.descripcion[currentLang]}</p>
+          <div class="price">$${item.precio.toFixed(2)}</div>
+          <button class="buy-btn" data-id="${item.id}">Add to Cart</button>
+        `;
+                storeItems.appendChild(card);
+            });
+
+            document.querySelectorAll('.buy-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = +btn.getAttribute('data-id');
+                    const prod = sistemas.find(p => p.id === id);
+                    carrito.push(prod);
+                    renderCart();
+                });
+            });
+        }
+
+        function renderCart() {
+            const cartSection = $('#cart');
+            const cartItems = $('#cart-items');
+            const cartTotal = $('#cart-total');
+            const paypalContainer = $('#paypal-button-container');
+
+            if (carrito.length === 0) {
+                cartSection.style.display = 'none';
+                paypalContainer.innerHTML = '';
+                return;
+            }
+
+            cartSection.style.display = 'block';
+            cartItems.innerHTML = '';
+            let total = 0;
+
+            carrito.forEach((item, i) => {
+                total += item.precio;
+                const li = document.createElement('li');
+                li.innerHTML = `
+          ${item.nombre[currentLang]} – $${item.precio.toFixed(2)}
+          <button onclick="removeItem(${i})">${i18n[currentLang].delete}</button>
+        `;
+                cartItems.appendChild(li);
+            });
+
+            cartTotal.textContent = `${i18n[currentLang].total}: $${total.toFixed(2)} USD`;
+            renderPaypalButton(total.toFixed(2));
+        }
+
+        window.removeItem = i => {
+            carrito.splice(i, 1);
+            renderCart();
+        };
+
+        function renderPaypalButton(total) {
+            const paypalContainer = $('#paypal-button-container');
+            paypalContainer.innerHTML = '';
+            paypal.Buttons({
+                createOrder: (data, actions) => actions.order.create({
+                    purchase_units: [{ amount: { value: total } }]
+                }),
+                onApprove: (data, actions) => actions.order.capture().then(details => {
+                    alert(`${i18n[currentLang].thanks}, ${details.payer.name.given_name}!`);
+                    carrito = [];
+                    renderCart();
+                }),
+                onError: err => {
+                    console.error(err);
+                    alert('Error in payment.');
+                }
+            }).render('#paypal-button-container');
+        }
+
+        $('#lang-toggle').addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'es' : 'en';
+            $('#lang-toggle').textContent = currentLang === 'en' ? '🌐 EN' : '🌐 ES';
+            updateTexts();
+            renderProductos();
+            renderCart();
+        });
+
+        $('#theme-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            $('#theme-toggle').textContent = isLight ? '☀️' : '🌙';
+        });
+
+        const contactLink = document.getElementById('contact-link');
+        const modal = document.getElementById('contact-modal');
+        const closeBtn = document.getElementById('modal-close');
+        const contactForm = document.getElementById('contact-form');
+
+        contactLink.addEventListener('click', e => {
+            e.preventDefault();
+            modal.classList.add('show');
+            modal.setAttribute('aria-hidden', 'false');
+            document.getElementById('name').focus();
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('show');
+            modal.setAttribute('aria-hidden', 'true');
+            contactLink.focus();
+        });
+
+        modal.addEventListener('click', e => {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+                modal.setAttribute('aria-hidden', 'true');
+                contactLink.focus();
+            }
+        });
+
+        contactForm.addEventListener('submit', e => {
+            e.preventDefault();
+            if (!contactForm.checkValidity()) {
+                contactForm.reportValidity();
+                return;
+            }
+
+            alert('Thank you for contacting us, ' + contactForm.name.value + '!');
+            contactForm.reset();
+            modal.classList.remove('show');
+            modal.setAttribute('aria-hidden', 'true');
+            contactLink.focus();
+        });
+
+        updateTexts();
+        renderProductos();
+        renderCart();
+    </script>
 </body>
+
 </html>
