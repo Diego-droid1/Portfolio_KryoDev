@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tienda KryoDev - Venta de Sistemas</title>
+  <style>
+    /* Reset y estilos generales (igual que antes) */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #121212;
+      color: #e0e0e0;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+    @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0px); } }
+    a { color: #00bcd4; text-decoration: none; transition: color 0.3s ease; }
+    a:hover, a:focus { text-decoration: underline; color: #00e0ff; outline: none; }
+
+    header {
+      background-color: #1f1f1f;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #00bcd4;
+      animation: fadeIn 1s ease-out;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    header h1 {
+      font-weight: 700;
+      font-size: 2rem;
+      letter-spacing: 2px;
+      color: #00bcd4;
+      animation: pulse 2.5s infinite;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    nav ul li { font-weight: 600; }
+    main {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+      flex-grow: 1;
+      animation: fadeIn 1s ease;
+    }
+    h2 {
+      font-size: 2rem;
+      border-bottom: 3px solid #00bcd4;
+      display: inline-block;
+      margin-bottom: 30px;
+      animation: fadeIn 1s ease;
+    }
+    .store-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+    .item-card {
+      background-color: #222;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 188, 212, 0.2);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeIn 0.6s ease forwards;
+      transform: scale(1);
+      position: relative;
+      overflow: hidden;
+    }
+    .item-card:hover, .item-card:focus-within {
+      transform: scale(1.04) rotateX(1deg);
+      box-shadow: 0 16px 30px rgba(0, 188, 212, 0.7);
+      outline: none;
+      border: 1.5px solid #00e0ff;
+      background: linear-gradient(145deg, #1b1b1b, #282828);
+    }
+    .item-card h3 { color: #00e0ff; margin-bottom: 12px; }
+    .item-card p {
+      color: #bbb;
+      flex-grow: 1;
+      margin-bottom: 15px;
+      text-shadow: 0 0 3px #00bcd4;
+    }
+    .price {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #4caf50;
+      margin-bottom: 15px;
+      text-shadow: 0 0 8px #4caf50, 0 0 20px #81c784;
+    }
+    .buy-btn {
+      background: linear-gradient(135deg, #00bcd4, #00e0ff);
+      color: #121212;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px #00bcd4, 0 0 10px #00e0ff inset;
+      user-select: none;
+    }
+    .buy-btn:hover, .buy-btn:focus {
+      background: linear-gradient(135deg, #00e0ff, #00bcd4);
+      transform: scale(1.08);
+      box-shadow: 0 6px 20px #00e0ff, 0 0 20px #00bcd4 inset;
+      outline: none;
+    }
+
+    /* Contenedor del video */
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 188, 212, 0.25), 0 4px 12px rgba(0, 188, 212, 0.15);
+      border: 1.5px solid rgba(0, 188, 212, 0.4);
+      background: linear-gradient(135deg, #0b273e 0%, #143a57 100%);
+      transition: box-shadow 0.3s ease;
+    }
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 12px;
+      filter: drop-shadow(0 0 5px rgba(0, 188, 212, 0.3));
+      transition: filter 0.3s ease;
+    }
+    .video-container iframe:hover, .video-container iframe:focus {
+      filter: drop-shadow(0 0 9px rgba(0, 188, 212, 0.5));
+      outline: none;
+    }
+
+    /* Carrito */
+    #cart {
+      background-color: #222;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 6px 12px rgba(0, 188, 212, 0.2);
+      margin-top: 50px;
+      animation: fadeIn 0.8s ease;
+      display: none;
+    }
+    #cart h3 { color: #00bcd4; margin-bottom: 15px; }
+    #cart ul {
+      list-style: none;
+      margin-bottom: 15px;
+      max-height: 250px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+    #cart ul li {
+      padding: 8px 10px;
+      border-bottom: 1px solid #333;
+      color: #ccc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #cart ul li:last-child { border-bottom: none; }
+    #cart ul li button {
+      background-color: #e53935;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      padding: 4px 8px;
+      font-size: 0.9rem;
+      transition: background-color 0.3s ease;
+    }
+    #cart ul li button:hover, #cart ul li button:focus {
+      background-color: #b71c1c;
+      outline: none;
+    }
+    #cart-total {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #4caf50;
+      margin-bottom: 20px;
+    }
+    #paypal-button-container { margin-top: 10px; }
+
+    /* Footer */
+    footer {
+      background-color: #1f1f1f;
+      text-align: center;
+      padding: 15px 10px;
+      color: #666;
+      font-size: 0.9rem;
+      border-top: 2px solid #00bcd4;
+      margin-top: 60px;
+      animation: fadeIn 1s ease-in;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      header { flex-direction: column; gap: 15px; }
+      nav ul { flex-direction: column; gap: 15px; align-items: center; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>KryoDev</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Productos</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Sistemas Disponibles para la Venta</h2>
+    <div class="store-items" id="store-items"></div>
+
+    <section id="cart">
+      <h3>Tu Carrito</h3>
+      <ul id="cart-items"></ul>
+      <div id="cart-total"></div>
+      <div id="paypal-button-container"></div>
+    </section>
+  </main>
+
+  <footer>&copy; 2025 KryoDev - Todos los derechos reservados.</footer>
+
+  <script src="https://www.sandbox.paypal.com/sdk/js?client-id=AZZU4ZiCU0mxG_VWhz3wvCP_beg_QmnW2WlbCw39Iqzym9hntMeHyuQ8QaXcuA4BcEMcwsNpr3bYW20o&currency=USD"></script>
+  <script>
+    const sistemas = [
+      {
+        id: 1,
+        nombre: "Roblox Studio Rounds System – Game-Changing Gameplay!",
+        descripcion: "Una herramienta poderosa para controlar dinámicamente las rondas en tu juego Roblox Studio.",
+        precio: 19.99,
+        video: "https://www.youtube.com/embed/dBsTO_snkik",
+        archivoDescarga: "Round System - KD.rbxl"
+      }
+    ];
+
+    let carrito = [];
+
+    const storeItems = document.getElementById('store-items');
+    const cartSection = document.getElementById('cart');
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    const paypalContainer = document.getElementById('paypal-button-container');
+
+    function renderProductos() {
+      storeItems.innerHTML = '';
+      sistemas.forEach(item => {
+        const el = document.createElement('article');
+        el.className = 'item-card';
+        el.innerHTML = `
+          <div class="video-container">
+            <iframe src="${item.video}" title="${item.nombre} demo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <h3>${item.nombre}</h3>
+          <p>${item.descripcion}</p>
+          <div class="price">$${item.precio.toFixed(2)}</div>
+          <button class="buy-btn" data-id="${item.id}">Añadir al carrito</button>
+        `;
+        storeItems.appendChild(el);
+      });
+      document.querySelectorAll('.buy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = +btn.getAttribute('data-id');
+          const prod = sistemas.find(p => p.id === id);
+          carrito.push(prod);
+          renderCart();
+        });
+      });
+    }
+
+    function renderCart() {
+      if (carrito.length === 0) {
+        cartSection.style.display = 'none';
+        paypalContainer.innerHTML = '';
+        return;
+      }
+      cartSection.style.display = 'block';
+      cartItems.innerHTML = '';
+      let total = 0;
+      carrito.forEach((item, i) => {
+        total += item.precio;
+        const li = document.createElement('li');
+        li.innerHTML = `${item.nombre} – $${item.precio.toFixed(2)} <button onclick="removeItem(${i})">Eliminar</button>`;
+        cartItems.appendChild(li);
+      });
+      cartTotal.textContent = `Total: $${total.toFixed(2)} USD`;
+      renderPaypalButton(total.toFixed(2));
+    }
+
+    window.removeItem = i => { carrito.splice(i, 1); renderCart(); };
+
+    function renderPaypalButton(total) {
+      paypalContainer.innerHTML = '';
+      paypal.Buttons({
+        createOrder: (data, actions) => actions.order.create({
+          purchase_units: [{ amount: { value: total }, description: "Compra en KryoDev" }]
+        }),
+        onApprove: (data, actions) => actions.order.capture().then(details => {
+          alert(`Gracias por tu compra, ${details.payer.name.given_name}!`);
+          carrito.forEach(item => {
+            const a = document.createElement('a');
+            a.href = `descargar.php?archivo=${encodeURIComponent(item.archivoDescarga)}`;
+            a.download = item.archivoDescarga;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          });
+          carrito = [];
+          renderCart();
+        }),
+        onError: err => {
+          console.error(err);
+          alert('Hubo un error en el pago.');
+        }
+      }).render('#paypal-button-container');
+    }
+
+    renderProductos();
+    renderCart();
+  </script>
+</body>
+</html>
