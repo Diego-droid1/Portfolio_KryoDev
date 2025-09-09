@@ -494,7 +494,7 @@
     };
 
     function renderPaypalButton(total) {
-  const paypalContainer = $('#paypal-button-container');
+  const paypalContainer = document.getElementById('paypal-button-container');
   paypalContainer.innerHTML = '';
   paypal.Buttons({
     createOrder: (data, actions) => actions.order.create({
@@ -503,16 +503,21 @@
     onApprove: (data, actions) => actions.order.capture().then(details => {
       alert(`${i18n[currentLang].thanks}, ${details.payer.name.given_name}!`);
 
-      if (carrito.length > 0) {
-        const producto = carrito[0];
-        localStorage.setItem('compraValida', 'true');
-        localStorage.setItem('archivoDescarga', producto.archivoDescarga);
-      }
+      // ID del archivo en Google Drive
+      const driveId = "1_Gyf5_D2QUotynWcJ08UB5A3CeOcB6U0";
+      const downloadUrl = `https://drive.google.com/uc?export=download&id=${driveId}`;
 
+      // Crear y forzar descarga automática
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = ''; // Nombre automático o puedes especificar uno si deseas
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      // Limpia el carrito
       carrito = [];
       renderCart();
-
-      window.location.href = './descargar.html';
     }),
     onError: err => {
       console.error(err);
